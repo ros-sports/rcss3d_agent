@@ -1,0 +1,385 @@
+<?xml version="1.0" ?>
+<robot name="nao" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- dummy first link, directly connects with torso -->
+  <link name="base_link" />
+
+  <joint name="base_joint" type="fixed">
+    <child link="torso"/>
+    <parent link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="torso">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <box size="0.1 0.1 0.18"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="hj1" type="continuous">
+    <parent link="torso" />
+    <child link="neck" />
+    <origin rpy="0 0 0" xyz="0 0 0.09" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="neck">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <cylinder length="0.08" radius="0.015" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="hj2" type="continuous">
+    <parent link="neck" />
+    <child link="head" />
+    <origin rpy="0 0 0" xyz="0 0 0.06" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="head">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.005"/>
+      <geometry>
+        <sphere radius="0.065" />
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Left Arm -->
+
+  <joint name="laj1" type="continuous">
+    <parent link="torso" />
+    <child link="shoulder-l" />
+    <origin rpy="0 0 0" xyz="0 0.098 0.075" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="shoulder-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.0001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="laj2" type="continuous">
+    <parent link="shoulder-l" />
+    <child link="upper-arm-l" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="upper-arm-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.02 0.01 0" />
+      <geometry>
+        <box size="0.08 0.07 0.06"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="laj3" type="continuous">
+    <parent link="upper-arm-l" />
+    <child link="elbow-l" />
+    <origin rpy="0 0 0" xyz="0.09 0 0.009" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="elbow-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="laj4" type="continuous">
+    <parent link="elbow-l" />
+    <child link="lower-arm-l" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="lower-arm-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.05 0 0" />
+      <geometry>
+        <box size="0.11 0.05 0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Right Arm -->
+
+  <joint name="raj1" type="continuous">
+    <parent link="torso" />
+    <child link="shoulder-r" />
+    <origin rpy="0 0 0" xyz="0 -0.098 0.075" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="shoulder-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.0001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="raj2" type="continuous">
+    <parent link="shoulder-r" />
+    <child link="upper-arm-r" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="upper-arm-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.02 -0.01 0" />
+      <geometry>
+        <box size="0.08 0.07 0.06"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="raj3" type="continuous">
+    <parent link="upper-arm-r" />
+    <child link="elbow-r" />
+    <origin rpy="0 0 0" xyz="0.09 0 0.009" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="elbow-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="raj4" type="continuous">
+    <parent link="elbow-r" />
+    <child link="lower-arm-r" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="lower-arm-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.05 0 0" />
+      <geometry>
+        <box size="0.11 0.05 0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+
+  <!-- Left Leg -->
+
+  <joint name="llj1" type="continuous">
+    <parent link="torso" />
+    <child link="hip1-l" />
+    <origin rpy="0 0 0" xyz="-0.01 0.055 -0.115" />
+    <axis xyz="0 0.707 -0.707" />
+  </joint>
+
+  <link name="hip1-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="llj2" type="continuous">
+    <parent link="hip1-l" />
+    <child link="hip2-l" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="hip2-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="llj3" type="continuous">
+    <parent link="hip2-l" />
+    <child link="upper-leg-l" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="upper-leg-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.01 0 -0.04" />
+      <geometry>
+        <box size="0.07 0.07 0.14"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- knee -->
+  <joint name="llj4" type="continuous">
+    <parent link="upper-leg-l" />
+    <child link="lower-leg-l" />
+    <origin rpy="0 0 0" xyz="0.01 0 -0.12" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="lower-leg-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.005 0 -0.045" />
+      <geometry>
+        <box size="0.07 0.08 0.11"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="llj5" type="continuous">
+    <parent link="lower-leg-l" />
+    <child link="ankle-l" />
+    <origin rpy="0 0 0" xyz="-0.005 0 -0.1" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="ankle-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="llj6" type="continuous">
+    <parent link="ankle-l" />
+    <child link="foot-l" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="foot-l">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.03 0 -0.04" />
+      <geometry>
+        <box size="0.16 0.08 0.02"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Right Leg -->
+
+
+  <joint name="rlj1" type="continuous">
+    <parent link="torso" />
+    <child link="hip1-r" />
+    <origin rpy="0 0 0" xyz="-0.01 -0.055 -0.115" />
+    <axis xyz="0 0.707 0.707" />
+  </joint>
+
+  <link name="hip1-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rlj2" type="continuous">
+    <parent link="hip1-r" />
+    <child link="hip2-r" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="hip2-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rlj3" type="continuous">
+    <parent link="hip2-r" />
+    <child link="upper-leg-r" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="upper-leg-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.01 0 -0.04" />
+      <geometry>
+        <box size="0.07 0.07 0.14"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- knee -->
+  <joint name="rlj4" type="continuous">
+    <parent link="upper-leg-r" />
+    <child link="lower-leg-r" />
+    <origin rpy="0 0 0" xyz="0.01 0 -0.12" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="lower-leg-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.005 0 -0.045" />
+      <geometry>
+        <box size="0.07 0.08 0.11"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rlj5" type="continuous">
+    <parent link="lower-leg-r" />
+    <child link="ankle-r" />
+    <origin rpy="0 0 0" xyz="-0.005 0 -0.1" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+  <link name="ankle-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <sphere radius="0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rlj6" type="continuous">
+    <parent link="ankle-r" />
+    <child link="foot-r" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="foot-r">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.03 0 -0.04" />
+      <geometry>
+        <box size="0.16 0.08 0.02"/>
+      </geometry>
+    </visual>
+  </link>
+
+</robot>
