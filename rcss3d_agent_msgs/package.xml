@@ -2,9 +2,9 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rcss3d_agent_msgs</name>
-  <description>Custom messages for controlling robots in the RoboCup 3D simulation.</description>
-  <version>0.1.0</version>
-  <maintainer email="sgvandijk@gmail.com">Sander G. van Dijk</maintainer>
+  <description>Custom messages for communicating with rcss3d_agent</description>
+  <version>0.0.2</version>
+  <maintainer email="kenjibrameld@gmail.com">kenji</maintainer>
   <license>Apache License 2.0</license>
 
   <author>Sander G. van Dijk</author>

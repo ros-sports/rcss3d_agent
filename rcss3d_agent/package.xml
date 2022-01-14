@@ -2,9 +2,9 @@
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="2">
   <name>rcss3d_agent</name>
-  <version>0.1.0</version>
-  <description>Controller to interface with the RoboCup 3D Simulation server</description>
-  <maintainer email="sgvandijk@gmail.com">Sander G. van Dijk</maintainer>
+  <version>0.0.2</version>
+  <description>Launches a RoboCup 3D Simulation Agent, and converts data to and from ROS2 msgs</description>
+  <maintainer email="kenjibrameld@gmail.com">kenji</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
