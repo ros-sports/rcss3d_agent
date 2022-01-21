@@ -17,16 +17,21 @@
 
 #include <optional>
 #include <string>
+#include <vector>
 
 #include "rclcpp/rclcpp.hpp"
-#include "sensor_msgs/msg/imu.hpp"
-#include "sensor_msgs/msg/joint_state.hpp"
-#include "rosgraph_msgs/msg/clock.hpp"
-#include "rcss3d_agent_msgs/msg/ball.hpp"
-#include "rcss3d_agent_msgs/msg/goalpost_array.hpp"
-#include "rcss3d_agent_msgs/msg/field_line_array.hpp"
-#include "rcss3d_agent_msgs/msg/robot_array.hpp"
-#include "rcss3d_agent_msgs/msg/flag_array.hpp"
+#include "rcss3d_agent_msgs/msg/gyro_rate.hpp"
+#include "rcss3d_agent_msgs/msg/hinge_joint.hpp"
+#include "rcss3d_agent_msgs/msg/universal_joint.hpp"
+#include "rcss3d_agent_msgs/msg/force_resistance.hpp"
+#include "rcss3d_agent_msgs/msg/accelerometer.hpp"
+#include "rcss3d_agent_msgs/msg/vision.hpp"
+#include "rcss3d_agent_msgs/msg/game_state.hpp"
+#include "rcss3d_agent_msgs/msg/agent_state.hpp"
+#include "rcss3d_agent_msgs/msg/hear.hpp"
+#include "rcss3d_agent_msgs/msg/beam.hpp"
+#include "rcss3d_agent_msgs/msg/say.hpp"
+#include "rcss3d_agent_msgs/msg/percept.hpp"
 
 #define SEXPRESSO_OPT_OUT_PIKESTYLE
 #include "sexpresso/sexpresso.hpp"
@@ -39,20 +44,19 @@ class SexpParser
 public:
   explicit SexpParser(std::string msg);
 
-  rosgraph_msgs::msg::Clock getClock();
-  std::optional<sensor_msgs::msg::Imu> getImu();
-  sensor_msgs::msg::JointState getJoints();
-  std::optional<rcss3d_agent_msgs::msg::Ball> getBall();
-  std::optional<rcss3d_agent_msgs::msg::GoalpostArray> getGoalposts();
-  std::optional<rcss3d_agent_msgs::msg::FieldLineArray> getFieldLines();
-  std::optional<rcss3d_agent_msgs::msg::RobotArray> getRobots();
-  std::optional<rcss3d_agent_msgs::msg::FlagArray> getFlags();
+  std::vector<rcss3d_agent_msgs::msg::GyroRate> getGyroRates();
+  std::vector<rcss3d_agent_msgs::msg::HingeJoint> getHingeJoints();
+  std::vector<rcss3d_agent_msgs::msg::UniversalJoint> getUniversalJoints();
+  std::vector<rcss3d_agent_msgs::msg::ForceResistance> getForceResistances();
+  std::vector<rcss3d_agent_msgs::msg::Accelerometer> getAccelerometers();
+  std::optional<rcss3d_agent_msgs::msg::Vision> getVision();
+  rcss3d_agent_msgs::msg::GameState getGameState();
+  std::optional<rcss3d_agent_msgs::msg::AgentState> getAgentState();
+  std::vector<rcss3d_agent_msgs::msg::Hear> getHears();
 
 private:
   sexpresso::Sexp sexp;
   rclcpp::Logger logger;
-
-  rosgraph_msgs::msg::Clock clock;
 };
 
 

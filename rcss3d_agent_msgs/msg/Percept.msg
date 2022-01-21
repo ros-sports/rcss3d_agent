@@ -1,0 +1,9 @@
+GyroRate[] gyro_rate
+HingeJoint[] hinge_joints
+UniversalJoint[] universal_joints
+ForceResistance[] force_resistances
+Accelerometer[] accelerometers
+Vision[<=1] vision
+GameState game_state
+AgentState[<=1] agent_state
+Hear[] hears

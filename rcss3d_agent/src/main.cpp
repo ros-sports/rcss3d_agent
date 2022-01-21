@@ -1,4 +1,4 @@
-// Copyright 2019 Bold Hearts
+// Copyright 2021 Kenji Brameld
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "rcss3d_agent/rcss3d_joint_controller.hpp"
-
 #include <memory>
+#include "rcss3d_agent/rcss3d_agent_node.hpp"
 
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-
-  auto node = std::make_shared<rcss3d_agent::Rcss3DJointController>();
-
-  rclcpp::spin(node);
+  rclcpp::spin(std::make_shared<rcss3d_agent::Rcss3dAgentNode>());
   rclcpp::shutdown();
-  node = nullptr;
-
   return 0;
 }

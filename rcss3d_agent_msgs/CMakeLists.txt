@@ -23,19 +23,24 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 set(msg_files
-  "msg/JointCommand.msg"
-  "msg/JointPositionCommand.msg"
-  "msg/Beam.msg"
-  "msg/Spherical.msg"
+  "msg/Accelerometer.msg"
+  "msg/AgentState.msg"
   "msg/Ball.msg"
+  "msg/Beam.msg"
   "msg/FieldLine.msg"
-  "msg/FieldLineArray.msg"
   "msg/Flag.msg"
-  "msg/FlagArray.msg"
+  "msg/ForceResistance.msg"
+  "msg/GameState.msg"
   "msg/Goalpost.msg"
-  "msg/GoalpostArray.msg"
-  "msg/Robot.msg"
-  "msg/RobotArray.msg")
+  "msg/GyroRate.msg"
+  "msg/Hear.msg"
+  "msg/HingeJoint.msg"
+  "msg/Percept.msg"
+  "msg/Player.msg"
+  "msg/Say.msg"
+  "msg/Spherical.msg"
+  "msg/UniversalJoint.msg"
+  "msg/Vision.msg")
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}

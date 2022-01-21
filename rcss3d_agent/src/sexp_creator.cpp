@@ -1,4 +1,3 @@
-// Copyright 2019 Bold Hearts
 // Copyright 2021 Kenji Brameld
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +17,6 @@
 #include <vector>
 
 #include "rcss3d_agent/sexp_creator.hpp"
-#include "rcss3d_agent/angle_conversion.hpp"
 
 #define SEXPRESSO_OPT_OUT_PIKESTYLE
 #include "sexpresso/sexpresso.hpp"
@@ -76,12 +74,34 @@ std::string createJointMessage(std::vector<std::string> names, std::vector<float
   return createMessage(sexp, false);
 }
 
-std::string createBeamMessage(double x, double y, double theta)
+std::string createBeamMessage(const rcss3d_agent_msgs::msg::Beam & b)
 {
   auto sexp = sexpresso::Sexp{"beam"};
-  sexp.addChild(std::to_string(x));
-  sexp.addChild(std::to_string(y));
-  sexp.addChild(std::to_string(angle_conversion::rad2deg(theta)));
+  sexp.addChild(std::to_string(b.x));
+  sexp.addChild(std::to_string(b.y));
+  sexp.addChild(std::to_string(b.rot));
+  return createMessage(sexp);
+}
+
+std::string createSayMessage(const rcss3d_agent_msgs::msg::Say & s)
+{
+  auto sexp = sexpresso::Sexp{"say"};
+  sexp.addChild(s.message);
+  return createMessage(sexp);
+}
+
+std::string createHingeJointMessage(const rcss3d_agent_msgs::msg::HingeJoint & j)
+{
+  auto sexp = sexpresso::Sexp{j.name};
+  sexp.addChild(std::to_string(j.ax));
+  return createMessage(sexp);
+}
+
+std::string createUniversalJointMessage(const rcss3d_agent_msgs::msg::UniversalJoint & j)
+{
+  auto sexp = sexpresso::Sexp{j.name};
+  sexp.addChild(std::to_string(j.ax1));
+  sexp.addChild(std::to_string(j.ax2));
   return createMessage(sexp);
 }
 

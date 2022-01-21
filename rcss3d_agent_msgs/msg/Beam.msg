@@ -5,4 +5,4 @@
 
 float64 x  # metres
 float64 y  # metres
-float64 theta  # radians
+float64 rot  # radians

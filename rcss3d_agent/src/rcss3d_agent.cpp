@@ -1,4 +1,3 @@
-// Copyright 2019 Bold Hearts
 // Copyright 2021 Kenji Brameld
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,66 +23,23 @@
 
 #include "rcss3d_agent/sexp_creator.hpp"
 #include "rcss3d_agent/sexp_parser.hpp"
-#include "rcss3d_agent/angle_conversion.hpp"
 
 using namespace std::chrono_literals;
 
 namespace rcss3d_agent
 {
 
-Rcss3dAgent::Rcss3dAgent(const rclcpp::NodeOptions & options)
-: rclcpp::Node{"rcss3d_agent", options}
+Rcss3dAgent::Rcss3dAgent(const Params & p)
+: logger(rclcpp::get_logger("Rcss3dAgent"))
 {
   // Declare parameters
-  RCLCPP_DEBUG(get_logger(), "Declare parameters");
-  std::string rcss3d_host = this->declare_parameter<std::string>("rcss3d/host", "127.0.0.1");
-  int rcss3d_port = this->declare_parameter<int>("rcss3d/port", 3100);
-  std::string team = this->declare_parameter<std::string>("team", "Anonymous");
-  int unum = this->declare_parameter<int>("unum", 0);
-  std::string imu_frame = this->declare_parameter<std::string>("imu_frame", "base_link");
-  std::string camera_frame = this->declare_parameter<std::string>("camera_frame", "camera");
+  RCLCPP_DEBUG(logger, "Declare parameters");
 
   // Log parameters for debugging
-  logParametersToRclcppDebug(
-    rcss3d_host, rcss3d_port, team, unum, imu_frame, camera_frame);
-
-  // Publishers
-  clock_pub_ = create_publisher<rosgraph_msgs::msg::Clock>("/clock", 10);
-  imu_pub_ = create_publisher<sensor_msgs::msg::Imu>("imu/data_raw", 10);
-  joint_state_pub_ = create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
-  ball_pub_ = create_publisher<rcss3d_agent_msgs::msg::Ball>("vision/ball", 10);
-  posts_pub_ = create_publisher<rcss3d_agent_msgs::msg::GoalpostArray>("vision/goalposts", 10);
-  lines_pub_ =
-    create_publisher<rcss3d_agent_msgs::msg::FieldLineArray>("vision/field_lines", 10);
-  robots_pub_ = create_publisher<rcss3d_agent_msgs::msg::RobotArray>("vision/robots", 10);
-  flags_pub_ = create_publisher<rcss3d_agent_msgs::msg::FlagArray>("vision/flags", 10);
-
-  // Subscriptions
-  joint_command_sub_ =
-    create_subscription<rcss3d_agent_msgs::msg::JointCommand>(
-    "/joint_commands",
-    10,
-    [this](rcss3d_agent_msgs::msg::JointCommand::SharedPtr cmd) {
-      RCLCPP_DEBUG(get_logger(), "Got joint commands, for effectors:");
-      for (auto const & n : cmd->name) {
-        RCLCPP_DEBUG(get_logger(), n.c_str());
-      }
-
-      std::string msg = sexp_creator::createJointMessage(cmd->name, cmd->speed);
-      RCLCPP_DEBUG(this->get_logger(), ("Sending: " + msg).c_str());
-      connection.send(msg);
-    });
-
-  beam_sub_ =
-    create_subscription<rcss3d_agent_msgs::msg::Beam>(
-    "/beam", 10,
-    [this](rcss3d_agent_msgs::msg::Beam::SharedPtr cmd) {
-      RCLCPP_DEBUG(get_logger(), "Got beam msg to: %f, %f, %f", cmd->x, cmd->y, cmd->theta);
-      connection.send(sexp_creator::createBeamMessage(cmd->x, cmd->y, cmd->theta));
-    });
+  logParametersToRclcppDebug(p.rcss3d_host, p.rcss3d_port, p.team, p.unum);
 
   // Initialise connection
-  connection.initialise(rcss3d_host, rcss3d_port);
+  connection.initialise(p.rcss3d_host, p.rcss3d_port);
 
   // Create the robot
   connection.send(sexp_creator::createCreateMessage());
@@ -92,17 +48,17 @@ Rcss3dAgent::Rcss3dAgent(const rclcpp::NodeOptions & options)
   connection.receive();
 
   // Send init
-  connection.send(sexp_creator::createInitMessage(team, unum));
+  connection.send(sexp_creator::createInitMessage(p.team, p.unum));
 
-  // Start receive and send loop
+  // Start receive loop
   receive_thread_ = std::thread(
-    [this](std::string imu_frame, std::string camera_frame) {
+    [this]() {
       while (rclcpp::ok()) {
         std::string recv = connection.receive();
-        RCLCPP_DEBUG(this->get_logger(), ("Received: " + recv).c_str());
-        handle(recv, imu_frame, camera_frame);
+        RCLCPP_DEBUG(this->logger, ("Received: " + recv).c_str());
+        handle(recv);
       }
-    }, imu_frame, camera_frame);
+    });
 }
 
 Rcss3dAgent::~Rcss3dAgent()
@@ -112,83 +68,69 @@ Rcss3dAgent::~Rcss3dAgent()
   }
 }
 
-void Rcss3dAgent::handle(
-  std::string const & msg, std::string const & imu_frame,
-  std::string const & camera_frame)
+void Rcss3dAgent::handle(std::string const & msg)
 {
   SexpParser parsed(msg);
 
-  // Clock
-  auto clock = parsed.getClock();
-  clock_pub_->publish(clock);
-
-  // IMU
-  if (auto imu = parsed.getImu(); imu.has_value()) {
-    RCLCPP_DEBUG(get_logger(), "Publishing IMU");
-    auto imuVal = imu.value();
-    imuVal.header.frame_id = imu_frame;
-    imu_pub_->publish(std::make_unique<sensor_msgs::msg::Imu>(imuVal));
+  Percept percept;
+  percept.gyro_rate = parsed.getGyroRates();
+  percept.hinge_joints = parsed.getHingeJoints();
+  percept.universal_joints = parsed.getUniversalJoints();
+  percept.force_resistances = parsed.getForceResistances();
+  percept.accelerometers = parsed.getAccelerometers();
+  if (auto vision = parsed.getVision(); vision.has_value()) {
+    percept.vision.push_back(vision.value());
   }
-
-  // Joints
-  auto joint_states = parsed.getJoints();
-  joint_state_pub_->publish(std::make_unique<sensor_msgs::msg::JointState>(joint_states));
-
-  // Ball
-  if (auto ball = parsed.getBall(); ball.has_value()) {
-    auto ballVal = ball.value();
-    ballVal.header.frame_id = camera_frame;
-    ball_pub_->publish(ballVal);
+  percept.game_state = parsed.getGameState();
+  if (auto agent_state = parsed.getAgentState(); agent_state.has_value()) {
+    percept.agent_state.push_back(agent_state.value());
   }
+  percept.hears = parsed.getHears();
 
-  // Posts
-  if (auto posts = parsed.getGoalposts(); posts.has_value()) {
-    auto postsVal = posts.value();
-    for (auto & post : postsVal.posts) {
-      post.header.frame_id = camera_frame;
-    }
-    posts_pub_->publish(postsVal);
-  }
-
-  // Lines
-  if (auto lines = parsed.getFieldLines(); lines.has_value()) {
-    auto linesVal = lines.value();
-    for (auto & line : linesVal.lines) {
-      line.header.frame_id = camera_frame;
-    }
-    lines_pub_->publish(linesVal);
-  }
-
-  // Robots
-  if (auto robots = parsed.getRobots(); robots.has_value()) {
-    auto robotsVal = robots.value();
-    for (auto & robot : robotsVal.robots) {
-      robot.header.frame_id = camera_frame;
-    }
-    robots_pub_->publish(robotsVal);
-  }
-
-  // Flags
-  if (auto flags = parsed.getFlags(); flags.has_value()) {
-    auto flagsVal = flags.value();
-    for (auto & flag : flagsVal.flags) {
-      flag.header.frame_id = camera_frame;
-    }
-    flags_pub_->publish(flagsVal);
+  for (auto callbackPercept : callbacksPercept) {
+    callbackPercept(percept);
   }
 }
 
-void Rcss3dAgent::logParametersToRclcppDebug(
-  std::string rcss3d_host, int rcss3d_port, std::string team, int unum, std::string imu_frame,
-  std::string camera_frame)
+void Rcss3dAgent::sendHingeJoint(const HingeJoint & j)
 {
-  RCLCPP_DEBUG(get_logger(), "Parameters: ");
-  RCLCPP_DEBUG(get_logger(), "  rcss3d/host: %s", rcss3d_host.c_str());
-  RCLCPP_DEBUG(get_logger(), "  rcss3d/port: %d", rcss3d_port);
-  RCLCPP_DEBUG(get_logger(), "  team: %s", team.c_str());
-  RCLCPP_DEBUG(get_logger(), "  unum: %d", unum);
-  RCLCPP_DEBUG(get_logger(), "  imu_frame: %s", imu_frame.c_str());
-  RCLCPP_DEBUG(get_logger(), "  camera_frame: %s", camera_frame.c_str());
+  connection.send(sexp_creator::createHingeJointMessage(j));
+}
+
+void Rcss3dAgent::sendUniversalJoint(const UniversalJoint & j)
+{
+  connection.send(sexp_creator::createUniversalJointMessage(j));
+}
+
+// void Rcss3dAgent::sendSynchronize()
+// {
+
+// }
+
+void Rcss3dAgent::sendBeam(const Beam & b)
+{
+  connection.send(sexp_creator::createBeamMessage(b));
+}
+
+void Rcss3dAgent::sendSay(const Say & s)
+{
+  connection.send(sexp_creator::createSayMessage(s));
+}
+
+void Rcss3dAgent::registerPerceptCallback(
+  std::function<void(const Percept &)> callback)
+{
+  callbacksPercept.push_back(callback);
+}
+
+void Rcss3dAgent::logParametersToRclcppDebug(
+  std::string rcss3d_host, int rcss3d_port, std::string team, int unum)
+{
+  RCLCPP_DEBUG(logger, "Parameters: ");
+  RCLCPP_DEBUG(logger, "  rcss3d/host: %s", rcss3d_host.c_str());
+  RCLCPP_DEBUG(logger, "  rcss3d/port: %d", rcss3d_port);
+  RCLCPP_DEBUG(logger, "  team: %s", team.c_str());
+  RCLCPP_DEBUG(logger, "  unum: %d", unum);
 }
 
 }  // namespace rcss3d_agent

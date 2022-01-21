@@ -15,9 +15,12 @@
 #ifndef RCSS3D_AGENT__SEXP_CREATOR_HPP_
 #define RCSS3D_AGENT__SEXP_CREATOR_HPP_
 
-#include <utility>
 #include <string>
 #include <vector>
+#include "rcss3d_agent_msgs/msg/beam.hpp"
+#include "rcss3d_agent_msgs/msg/hinge_joint.hpp"
+#include "rcss3d_agent_msgs/msg/universal_joint.hpp"
+#include "rcss3d_agent_msgs/msg/say.hpp"
 
 namespace rcss3d_agent
 {
@@ -27,7 +30,10 @@ namespace sexp_creator
 std::string createCreateMessage();
 std::string createInitMessage(std::string const & team_name, int number);
 std::string createJointMessage(std::vector<std::string> names, std::vector<float> speeds);
-std::string createBeamMessage(double x, double y, double theta);
+std::string createBeamMessage(const rcss3d_agent_msgs::msg::Beam & b);
+std::string createSayMessage(const rcss3d_agent_msgs::msg::Say & s);
+std::string createHingeJointMessage(const rcss3d_agent_msgs::msg::HingeJoint & j);
+std::string createUniversalJointMessage(const rcss3d_agent_msgs::msg::UniversalJoint & j);
 }
 
 }  // namespace rcss3d_agent

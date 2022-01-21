@@ -25,12 +25,12 @@ find_package(rcss3d_agent_msgs REQUIRED)
 
 add_library(rcss3d_agent
   src/rcss3d_agent.cpp
-  src/rcss3d_joint_controller.cpp
   src/socket.cpp
   src/socketaddress.cpp
   src/connection.cpp
-  src/sexp_creator.cpp
   src/sexp_parser.cpp
+  src/sexp_creator.cpp
+  src/sexp_vision.cpp
   external/sexpresso/sexpresso/sexpresso.cpp)
 
 target_include_directories(rcss3d_agent PUBLIC
@@ -62,21 +62,15 @@ install(
   RUNTIME DESTINATION bin
 )
 
-add_executable(rcss3d_agent_node src/rcss3d_agent_node.cpp)
+add_executable(rcss3d_agent_node
+  src/rcss3d_agent_node.cpp
+  src/main.cpp)
 target_include_directories(rcss3d_agent_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_link_libraries(rcss3d_agent_node rcss3d_agent)
-# target_compile_options(rcss3d_agent_node PRIVATE -Werror)
 
-add_executable(rcss3d_joint_controller_node src/rcss3d_joint_controller_node.cpp)
-target_include_directories(rcss3d_joint_controller_node PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_link_libraries(rcss3d_joint_controller_node rcss3d_agent)
-# target_compile_options(rcss3d_joint_controller_node PRIVATE -Werror)
-
-install(TARGETS rcss3d_agent_node rcss3d_joint_controller_node
+install(TARGETS rcss3d_agent_node
   EXPORT export_${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME})
 

@@ -1,4 +1,3 @@
-// Copyright 2019 Bold Hearts
 // Copyright 2021 Kenji Brameld
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,63 +20,62 @@
 #include <string>
 
 #include "rclcpp/rclcpp.hpp"
-#include "rcss3d_agent/visibility_control.h"
 #include "rcss3d_agent/connection.hpp"
-#include "sensor_msgs/msg/imu.hpp"
-#include "sensor_msgs/msg/joint_state.hpp"
-#include "rosgraph_msgs/msg/clock.hpp"
-#include "rcss3d_agent_msgs/msg/joint_command.hpp"
-#include "rcss3d_agent_msgs/msg/ball.hpp"
-#include "rcss3d_agent_msgs/msg/goalpost_array.hpp"
-#include "rcss3d_agent_msgs/msg/field_line_array.hpp"
-#include "rcss3d_agent_msgs/msg/robot_array.hpp"
-#include "rcss3d_agent_msgs/msg/flag_array.hpp"
+#include "rcss3d_agent_msgs/msg/hinge_joint.hpp"
+#include "rcss3d_agent_msgs/msg/universal_joint.hpp"
 #include "rcss3d_agent_msgs/msg/beam.hpp"
+#include "rcss3d_agent_msgs/msg/percept.hpp"
+#include "rcss3d_agent_msgs/msg/say.hpp"
 
 namespace rcss3d_agent
 {
+class Params;
 
-class Rcss3dAgent : public rclcpp::Node
+class Rcss3dAgent
 {
 public:
-  explicit Rcss3dAgent(const rclcpp::NodeOptions & options = rclcpp::NodeOptions{});
-
+  explicit Rcss3dAgent(const Params & p);
   virtual ~Rcss3dAgent();
 
+  // Functions to call to send message
+  void sendHingeJoint(const rcss3d_agent_msgs::msg::HingeJoint & j);
+  void sendUniversalJoint(const rcss3d_agent_msgs::msg::UniversalJoint & j);
+  // void sendSynchronize();
+  void sendBeam(const rcss3d_agent_msgs::msg::Beam & b);
+  void sendSay(const rcss3d_agent_msgs::msg::Say & s);
+
+  // Register callback methods
+  void registerPerceptCallback(
+    std::function<void(const rcss3d_agent_msgs::msg::Percept &)> callback);
+
 private:
-  using Clock = rosgraph_msgs::msg::Clock;
-  using Imu = sensor_msgs::msg::Imu;
-  using JointState = sensor_msgs::msg::JointState;
-  using JointCommand = rcss3d_agent_msgs::msg::JointCommand;
-  using Ball = rcss3d_agent_msgs::msg::Ball;
-  using GoalpostArray = rcss3d_agent_msgs::msg::GoalpostArray;
-  using FieldLineArray = rcss3d_agent_msgs::msg::FieldLineArray;
-  using RobotArray = rcss3d_agent_msgs::msg::RobotArray;
-  using FlagArray = rcss3d_agent_msgs::msg::FlagArray;
+  using Percept = rcss3d_agent_msgs::msg::Percept;
+  using HingeJoint = rcss3d_agent_msgs::msg::HingeJoint;
   using Beam = rcss3d_agent_msgs::msg::Beam;
+  using UniversalJoint = rcss3d_agent_msgs::msg::UniversalJoint;
+  using Say = rcss3d_agent_msgs::msg::Say;
 
   Connection connection;
-
   std::thread receive_thread_;
+  rclcpp::Logger logger;
 
-  rclcpp::Publisher<Clock>::SharedPtr clock_pub_;
-  rclcpp::Publisher<Imu>::SharedPtr imu_pub_;
-  rclcpp::Publisher<JointState>::SharedPtr joint_state_pub_;
-  rclcpp::Publisher<Ball>::SharedPtr ball_pub_;
-  rclcpp::Publisher<GoalpostArray>::SharedPtr posts_pub_;
-  rclcpp::Publisher<FieldLineArray>::SharedPtr lines_pub_;
-  rclcpp::Publisher<RobotArray>::SharedPtr robots_pub_;
-  rclcpp::Publisher<FlagArray>::SharedPtr flags_pub_;
-
-  rclcpp::Subscription<JointCommand>::SharedPtr joint_command_sub_;
-  rclcpp::Subscription<Beam>::SharedPtr beam_sub_;
-
-  void handle(
-    std::string const & msg, std::string const & imu_frame,
-    std::string const & camera_frame);
+  void handle(std::string const & msg);
   void logParametersToRclcppDebug(
-    std::string rcss3d_host, int rcss3d_port, std::string team, int unum, std::string imu_frame,
-    std::string camera_frame);
+    std::string rcss3d_host, int rcss3d_port, std::string team, int unum);
+
+  // Registered Callbacks
+  std::vector<std::function<void(const Percept &)>> callbacksPercept;
+};
+
+class Params
+{
+public:
+  Params(std::string rcss3d_host, int rcss3d_port, std::string team, int unum)
+  : rcss3d_host(rcss3d_host), rcss3d_port(rcss3d_port), team(team), unum(unum) {}
+  std::string rcss3d_host;
+  int rcss3d_port;
+  std::string team;
+  int unum;
 };
 
 }  // namespace rcss3d_agent
