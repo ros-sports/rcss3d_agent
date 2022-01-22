@@ -52,8 +52,10 @@ private:
 
   rclcpp::Publisher<Percept>::SharedPtr percept_pub_;
 
-  // rclcpp::Subscription<JointCommand>::SharedPtr joint_command_sub_;
-  // rclcpp::Subscription<Beam>::SharedPtr beam_sub_;
+  rclcpp::Subscription<rcss3d_agent_msgs::msg::HingeJoint>::SharedPtr hingeJointSub;
+  rclcpp::Subscription<rcss3d_agent_msgs::msg::UniversalJoint>::SharedPtr universalJointSub;
+  rclcpp::Subscription<rcss3d_agent_msgs::msg::Beam>::SharedPtr beamSub;
+  rclcpp::Subscription<rcss3d_agent_msgs::msg::Say>::SharedPtr saySub;
 };
 
 }  // namespace rcss3d_agent

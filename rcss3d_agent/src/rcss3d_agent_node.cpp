@@ -54,28 +54,33 @@ Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
     });
 
   // Subscriptions
-  // joint_command_sub_ =
-  //   create_subscription<rcss3d_agent_msgs::msg::JointCommand>(
-  //   "/joint_commands",
-  //   10,
-  //   [this](rcss3d_agent_msgs::msg::JointCommand::SharedPtr cmd) {
-  //     RCLCPP_DEBUG(get_logger(), "Got joint commands, for effectors:");
-  //     for (auto const & n : cmd->name) {
-  //       RCLCPP_DEBUG(get_logger(), n.c_str());
-  //     }
+  hingeJointSub =
+    create_subscription<rcss3d_agent_msgs::msg::HingeJoint>(
+    "/effectors/hinge_joint", 10,
+    [this](rcss3d_agent_msgs::msg::HingeJoint::SharedPtr cmd) {
+      rcss3dAgent->sendHingeJoint(*cmd);
+    });
 
-  //     std::string msg = sexp_creator::createJointMessage(cmd->name, cmd->speed);
-  //     RCLCPP_DEBUG(this->get_logger(), ("Sending: " + msg).c_str());
-  //     connection.send(msg);
-  //   });
+  universalJointSub =
+    create_subscription<rcss3d_agent_msgs::msg::UniversalJoint>(
+    "/effectors/universal_joint", 10,
+    [this](rcss3d_agent_msgs::msg::UniversalJoint::SharedPtr cmd) {
+      rcss3dAgent->sendUniversalJoint(*cmd);
+    });
 
-  // beam_sub_ =
-  //   create_subscription<rcss3d_agent_msgs::msg::Beam>(
-  //   "/beam", 10,
-  //   [this](rcss3d_agent_msgs::msg::Beam::SharedPtr cmd) {
-  //     RCLCPP_DEBUG(get_logger(), "Got beam msg to: %f, %f, %f", cmd->x, cmd->y, cmd->theta);
-  //     connection.send(sexp_creator::createBeamMessage(cmd->x, cmd->y, cmd->theta));
-  //   });
+  beamSub =
+    create_subscription<rcss3d_agent_msgs::msg::Beam>(
+    "/effectors/beam", 10,
+    [this](rcss3d_agent_msgs::msg::Beam::SharedPtr cmd) {
+      rcss3dAgent->sendBeam(*cmd);
+    });
+
+  saySub =
+    create_subscription<rcss3d_agent_msgs::msg::Say>(
+    "/effectors/say", 10,
+    [this](rcss3d_agent_msgs::msg::Say::SharedPtr cmd) {
+      rcss3dAgent->sendSay(*cmd);
+    });
 }
 
 Rcss3dAgentNode::~Rcss3dAgentNode()
