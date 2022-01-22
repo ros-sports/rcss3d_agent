@@ -45,27 +45,27 @@ Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
 
   // Create publisher
   percept_pub_ =
-    create_publisher<Percept>("percept", 10);
+    create_publisher<rcss3d_agent_msgs::msg::Percept>("percept", 10);
 
   // Register callback
   rcss3dAgent->registerPerceptCallback(
-    [this](const Percept & percept) {
-      percept_pub_->publish(std::make_unique<Percept>(percept));
+    [this](const rcss3d_agent_msgs::msg::Percept & percept) {
+      percept_pub_->publish(std::make_unique<rcss3d_agent_msgs::msg::Percept>(percept));
     });
 
   // Subscriptions
   hingeJointSub =
-    create_subscription<rcss3d_agent_msgs::msg::HingeJoint>(
+    create_subscription<rcss3d_agent_msgs::msg::HingeJointVel>(
     "/effectors/hinge_joint", 10,
-    [this](rcss3d_agent_msgs::msg::HingeJoint::SharedPtr cmd) {
-      rcss3dAgent->sendHingeJoint(*cmd);
+    [this](rcss3d_agent_msgs::msg::HingeJointVel::SharedPtr cmd) {
+      rcss3dAgent->sendHingeJointVel(*cmd);
     });
 
   universalJointSub =
-    create_subscription<rcss3d_agent_msgs::msg::UniversalJoint>(
+    create_subscription<rcss3d_agent_msgs::msg::UniversalJointVel>(
     "/effectors/universal_joint", 10,
-    [this](rcss3d_agent_msgs::msg::UniversalJoint::SharedPtr cmd) {
-      rcss3dAgent->sendUniversalJoint(*cmd);
+    [this](rcss3d_agent_msgs::msg::UniversalJointVel::SharedPtr cmd) {
+      rcss3dAgent->sendUniversalJointVel(*cmd);
     });
 
   beamSub =

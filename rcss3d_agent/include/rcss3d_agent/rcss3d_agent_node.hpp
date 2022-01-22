@@ -34,26 +34,13 @@ public:
   virtual ~Rcss3dAgentNode();
 
 private:
-  using Ball = rcss3d_agent_msgs::msg::Ball;
-  using Beam = rcss3d_agent_msgs::msg::Beam;
-  using GyroRate = rcss3d_agent_msgs::msg::GyroRate;
-  using HingeJoint = rcss3d_agent_msgs::msg::HingeJoint;
-  using UniversalJoint = rcss3d_agent_msgs::msg::UniversalJoint;
-  using ForceResistance = rcss3d_agent_msgs::msg::ForceResistance;
-  using Accelerometer = rcss3d_agent_msgs::msg::Accelerometer;
-  using Vision = rcss3d_agent_msgs::msg::Vision;
-  using GameState = rcss3d_agent_msgs::msg::GameState;
-  using AgentState = rcss3d_agent_msgs::msg::AgentState;
-  using Hear = rcss3d_agent_msgs::msg::Hear;
-  using Percept = rcss3d_agent_msgs::msg::Percept;
-
   std::unique_ptr<rcss3d_agent::Params> params;
   std::unique_ptr<Rcss3dAgent> rcss3dAgent;
 
-  rclcpp::Publisher<Percept>::SharedPtr percept_pub_;
+  rclcpp::Publisher<rcss3d_agent_msgs::msg::Percept>::SharedPtr percept_pub_;
 
-  rclcpp::Subscription<rcss3d_agent_msgs::msg::HingeJoint>::SharedPtr hingeJointSub;
-  rclcpp::Subscription<rcss3d_agent_msgs::msg::UniversalJoint>::SharedPtr universalJointSub;
+  rclcpp::Subscription<rcss3d_agent_msgs::msg::HingeJointVel>::SharedPtr hingeJointSub;
+  rclcpp::Subscription<rcss3d_agent_msgs::msg::UniversalJointVel>::SharedPtr universalJointSub;
   rclcpp::Subscription<rcss3d_agent_msgs::msg::Beam>::SharedPtr beamSub;
   rclcpp::Subscription<rcss3d_agent_msgs::msg::Say>::SharedPtr saySub;
 };

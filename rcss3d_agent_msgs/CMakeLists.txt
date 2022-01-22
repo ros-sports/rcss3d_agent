@@ -34,12 +34,14 @@ set(msg_files
   "msg/Goalpost.msg"
   "msg/GyroRate.msg"
   "msg/Hear.msg"
-  "msg/HingeJoint.msg"
+  "msg/HingeJointPos.msg"
+  "msg/HingeJointVel.msg"
   "msg/Percept.msg"
   "msg/Player.msg"
   "msg/Say.msg"
   "msg/Spherical.msg"
-  "msg/UniversalJoint.msg"
+  "msg/UniversalJointPos.msg"
+  "msg/UniversalJointVel.msg"
   "msg/Vision.msg")
 
 rosidl_generate_interfaces(${PROJECT_NAME}

@@ -90,14 +90,14 @@ std::string createSayMessage(const rcss3d_agent_msgs::msg::Say & s)
   return createMessage(sexp);
 }
 
-std::string createHingeJointMessage(const rcss3d_agent_msgs::msg::HingeJoint & j)
+std::string createHingeJointVelMessage(const rcss3d_agent_msgs::msg::HingeJointVel & j)
 {
   auto sexp = sexpresso::Sexp{j.name};
   sexp.addChild(std::to_string(j.ax));
   return createMessage(sexp);
 }
 
-std::string createUniversalJointMessage(const rcss3d_agent_msgs::msg::UniversalJoint & j)
+std::string createUniversalJointVelMessage(const rcss3d_agent_msgs::msg::UniversalJointVel & j)
 {
   auto sexp = sexpresso::Sexp{j.name};
   sexp.addChild(std::to_string(j.ax1));

@@ -47,14 +47,14 @@ std::vector<rcss3d_agent_msgs::msg::GyroRate> SexpParser::getGyroRates()
   return gyroRates;
 }
 
-std::vector<rcss3d_agent_msgs::msg::HingeJoint> SexpParser::getHingeJoints()
+std::vector<rcss3d_agent_msgs::msg::HingeJointPos> SexpParser::getHingeJointPos()
 {
-  std::vector<rcss3d_agent_msgs::msg::HingeJoint> hingeJoints;
+  std::vector<rcss3d_agent_msgs::msg::HingeJointPos> hingeJoints;
   for (auto const & arg : sexp.arguments()) {
     // Joint expressions have form: (HJ (n <name>) (ax <ax>))
     auto const & s = arg.value.sexp;
     if (s.at(0).value.str == "HJ") {
-      rcss3d_agent_msgs::msg::HingeJoint hingeJoint;
+      rcss3d_agent_msgs::msg::HingeJointPos hingeJoint;
       hingeJoint.name = s.at(1).value.sexp.at(1).value.str;
       hingeJoint.ax = std::stof(s.at(2).value.sexp.at(1).value.str);
       hingeJoints.push_back(hingeJoint);
@@ -63,14 +63,14 @@ std::vector<rcss3d_agent_msgs::msg::HingeJoint> SexpParser::getHingeJoints()
   return hingeJoints;
 }
 
-std::vector<rcss3d_agent_msgs::msg::UniversalJoint> SexpParser::getUniversalJoints()
+std::vector<rcss3d_agent_msgs::msg::UniversalJointPos> SexpParser::getUniversalJointPos()
 {
-  std::vector<rcss3d_agent_msgs::msg::UniversalJoint> universalJoints;
+  std::vector<rcss3d_agent_msgs::msg::UniversalJointPos> universalJoints;
   for (auto const & arg : sexp.arguments()) {
     // Joint expressions have form: (UJ (n <name>) (ax1 <ax1>) (ax2 <ax2>))
     auto const & s = arg.value.sexp;
     if (s.at(0).value.str == "UJ") {
-      rcss3d_agent_msgs::msg::UniversalJoint universalJoint;
+      rcss3d_agent_msgs::msg::UniversalJointPos universalJoint;
       universalJoint.name = s.at(1).value.sexp.at(1).value.str;
       universalJoint.ax1 = std::stof(s.at(2).value.sexp.at(1).value.str);
       universalJoint.ax2 = std::stof(s.at(3).value.sexp.at(1).value.str);

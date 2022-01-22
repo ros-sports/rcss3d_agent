@@ -74,8 +74,8 @@ void Rcss3dAgent::handle(std::string const & msg)
 
   rcss3d_agent_msgs::msg::Percept percept;
   percept.gyro_rate = parsed.getGyroRates();
-  percept.hinge_joints = parsed.getHingeJoints();
-  percept.universal_joints = parsed.getUniversalJoints();
+  percept.hinge_joints = parsed.getHingeJointPos();
+  percept.universal_joints = parsed.getUniversalJointPos();
   percept.force_resistances = parsed.getForceResistances();
   percept.accelerometers = parsed.getAccelerometers();
   if (auto vision = parsed.getVision(); vision.has_value()) {
@@ -92,14 +92,14 @@ void Rcss3dAgent::handle(std::string const & msg)
   }
 }
 
-void Rcss3dAgent::sendHingeJoint(const rcss3d_agent_msgs::msg::HingeJoint & j)
+void Rcss3dAgent::sendHingeJointVel(const rcss3d_agent_msgs::msg::HingeJointVel & j)
 {
-  connection.send(sexp_creator::createHingeJointMessage(j));
+  connection.send(sexp_creator::createHingeJointVelMessage(j));
 }
 
-void Rcss3dAgent::sendUniversalJoint(const rcss3d_agent_msgs::msg::UniversalJoint & j)
+void Rcss3dAgent::sendUniversalJointVel(const rcss3d_agent_msgs::msg::UniversalJointVel & j)
 {
-  connection.send(sexp_creator::createUniversalJointMessage(j));
+  connection.send(sexp_creator::createUniversalJointVelMessage(j));
 }
 
 // void Rcss3dAgent::sendSynchronize()

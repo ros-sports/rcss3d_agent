@@ -43,41 +43,41 @@ TEST(TestGyroRates, TestMultipleGyroRates)
   EXPECT_EQ(gyroRates.size(), 2u);
 }
 
-TEST(TestHingeJoints, TestNoHingeJoints)
+TEST(TestHingeJointPos, TestNoHingeJointPos)
 {
   rcss3d_agent::SexpParser parser("");
-  auto hingeJoints = parser.getHingeJoints();
+  auto hingeJoints = parser.getHingeJointPos();
   EXPECT_EQ(hingeJoints.size(), 0u);
 }
 
-TEST(TestHingeJoints, TestOneHingeJoint)
+TEST(TestHingeJointPos, TestOneHingeJointPos)
 {
   rcss3d_agent::SexpParser parser("(HJ (n laj3) (ax -1.02))");
-  auto hingeJoints = parser.getHingeJoints();
+  auto hingeJoints = parser.getHingeJointPos();
   ASSERT_EQ(hingeJoints.size(), 1u);
   auto hingeJoint = hingeJoints.at(0);
   EXPECT_EQ(hingeJoint.name, "laj3");
   EXPECT_NEAR(hingeJoint.ax, -1.02, 0.00001);
 }
 
-TEST(TestHingeJoints, TestMultipleHingeJoints)
+TEST(TestHingeJointPos, TestMultipleHingeJointPos)
 {
   rcss3d_agent::SexpParser parser("(HJ (n laj3) (ax -1.02))(HJ (n laj4) (ax -1.03))");
-  auto hingeJoints = parser.getHingeJoints();
+  auto hingeJoints = parser.getHingeJointPos();
   EXPECT_EQ(hingeJoints.size(), 2u);
 }
 
-TEST(TestUniversalJoints, TestNoUniversalJoints)
+TEST(TestUniversalJointPos, TestNoUniversalJointPos)
 {
   rcss3d_agent::SexpParser parser("");
-  auto universalJoints = parser.getUniversalJoints();
+  auto universalJoints = parser.getUniversalJointPos();
   EXPECT_EQ(universalJoints.size(), 0u);
 }
 
-TEST(TestUniversalJoints, TestOneUniversalJoint)
+TEST(TestUniversalJointPos, TestOneUniversalJointPo)
 {
   rcss3d_agent::SexpParser parser("(UJ (n laj1) (ax1 -1.32) (ax2 2.00))");
-  auto universalJoints = parser.getUniversalJoints();
+  auto universalJoints = parser.getUniversalJointPos();
   ASSERT_EQ(universalJoints.size(), 1u);
   auto universalJoint = universalJoints.at(0);
   EXPECT_EQ(universalJoint.name, "laj1");
@@ -85,11 +85,11 @@ TEST(TestUniversalJoints, TestOneUniversalJoint)
   EXPECT_NEAR(universalJoint.ax2, 2.00, 0.00001);
 }
 
-TEST(TestUniversalJoints, TestMultipleUniversalJoints)
+TEST(TestUniversalJointPos, TestMultipleUniversalJointPos)
 {
   rcss3d_agent::SexpParser parser(
     "(UJ (n laj1) (ax1 -1.32) (ax2 2.00))(UJ (n laj2) (ax1 -1.32) (ax2 2.00))");
-  auto universalJoints = parser.getUniversalJoints();
+  auto universalJoints = parser.getUniversalJointPos();
   EXPECT_EQ(universalJoints.size(), 2u);
 }
 

@@ -21,8 +21,8 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "rcss3d_agent/connection.hpp"
-#include "rcss3d_agent_msgs/msg/hinge_joint.hpp"
-#include "rcss3d_agent_msgs/msg/universal_joint.hpp"
+#include "rcss3d_agent_msgs/msg/hinge_joint_vel.hpp"
+#include "rcss3d_agent_msgs/msg/universal_joint_vel.hpp"
 #include "rcss3d_agent_msgs/msg/beam.hpp"
 #include "rcss3d_agent_msgs/msg/percept.hpp"
 #include "rcss3d_agent_msgs/msg/say.hpp"
@@ -38,8 +38,8 @@ public:
   virtual ~Rcss3dAgent();
 
   // Functions to call to send message
-  void sendHingeJoint(const rcss3d_agent_msgs::msg::HingeJoint & j);
-  void sendUniversalJoint(const rcss3d_agent_msgs::msg::UniversalJoint & j);
+  void sendHingeJointVel(const rcss3d_agent_msgs::msg::HingeJointVel & j);
+  void sendUniversalJointVel(const rcss3d_agent_msgs::msg::UniversalJointVel & j);
   // void sendSynchronize();
   void sendBeam(const rcss3d_agent_msgs::msg::Beam & b);
   void sendSay(const rcss3d_agent_msgs::msg::Say & s);

@@ -21,8 +21,8 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "rcss3d_agent_msgs/msg/gyro_rate.hpp"
-#include "rcss3d_agent_msgs/msg/hinge_joint.hpp"
-#include "rcss3d_agent_msgs/msg/universal_joint.hpp"
+#include "rcss3d_agent_msgs/msg/hinge_joint_pos.hpp"
+#include "rcss3d_agent_msgs/msg/universal_joint_pos.hpp"
 #include "rcss3d_agent_msgs/msg/force_resistance.hpp"
 #include "rcss3d_agent_msgs/msg/accelerometer.hpp"
 #include "rcss3d_agent_msgs/msg/vision.hpp"
@@ -45,8 +45,8 @@ public:
   explicit SexpParser(std::string msg);
 
   std::vector<rcss3d_agent_msgs::msg::GyroRate> getGyroRates();
-  std::vector<rcss3d_agent_msgs::msg::HingeJoint> getHingeJoints();
-  std::vector<rcss3d_agent_msgs::msg::UniversalJoint> getUniversalJoints();
+  std::vector<rcss3d_agent_msgs::msg::HingeJointPos> getHingeJointPos();
+  std::vector<rcss3d_agent_msgs::msg::UniversalJointPos> getUniversalJointPos();
   std::vector<rcss3d_agent_msgs::msg::ForceResistance> getForceResistances();
   std::vector<rcss3d_agent_msgs::msg::Accelerometer> getAccelerometers();
   std::optional<rcss3d_agent_msgs::msg::Vision> getVision();

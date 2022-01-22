@@ -34,21 +34,21 @@ TEST(TestSexpCreator, TestCreateSayMessage)
   EXPECT_EQ(msg, "(say helloworld)");
 }
 
-TEST(TestSexpCreator, TestCreateHingeJointMessage)
+TEST(TestSexpCreator, TestCreateHingeJointVelMessage)
 {
-  rcss3d_agent_msgs::msg::HingeJoint j;
+  rcss3d_agent_msgs::msg::HingeJointVel j;
   j.name = "lae3";
   j.ax = 5.3;
-  std::string msg = rcss3d_agent::sexp_creator::createHingeJointMessage(j);
+  std::string msg = rcss3d_agent::sexp_creator::createHingeJointVelMessage(j);
   EXPECT_EQ(msg, "(lae3 5.300000)");
 }
 
-TEST(TestSexpCreator, TestCreateUniversalJointMessage)
+TEST(TestSexpCreator, TestCreateUniversalJointVelMessage)
 {
-  rcss3d_agent_msgs::msg::UniversalJoint j;
+  rcss3d_agent_msgs::msg::UniversalJointVel j;
   j.name = "lae1";
   j.ax1 = -2.3;
   j.ax2 = 1.2;
-  std::string msg = rcss3d_agent::sexp_creator::createUniversalJointMessage(j);
+  std::string msg = rcss3d_agent::sexp_creator::createUniversalJointVelMessage(j);
   EXPECT_EQ(msg, "(lae1 -2.300000 1.200000)");
 }

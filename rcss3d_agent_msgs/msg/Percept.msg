@@ -1,6 +1,6 @@
 GyroRate[] gyro_rate
-HingeJoint[] hinge_joints
-UniversalJoint[] universal_joints
+HingeJointPos[] hinge_joints
+UniversalJointPos[] universal_joints
 ForceResistance[] force_resistances
 Accelerometer[] accelerometers
 Vision[<=1] vision

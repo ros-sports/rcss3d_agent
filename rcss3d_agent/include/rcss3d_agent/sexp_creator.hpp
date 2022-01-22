@@ -18,8 +18,8 @@
 #include <string>
 #include <vector>
 #include "rcss3d_agent_msgs/msg/beam.hpp"
-#include "rcss3d_agent_msgs/msg/hinge_joint.hpp"
-#include "rcss3d_agent_msgs/msg/universal_joint.hpp"
+#include "rcss3d_agent_msgs/msg/hinge_joint_vel.hpp"
+#include "rcss3d_agent_msgs/msg/universal_joint_vel.hpp"
 #include "rcss3d_agent_msgs/msg/say.hpp"
 
 namespace rcss3d_agent
@@ -32,8 +32,8 @@ std::string createInitMessage(std::string const & team_name, int number);
 std::string createJointMessage(std::vector<std::string> names, std::vector<float> speeds);
 std::string createBeamMessage(const rcss3d_agent_msgs::msg::Beam & b);
 std::string createSayMessage(const rcss3d_agent_msgs::msg::Say & s);
-std::string createHingeJointMessage(const rcss3d_agent_msgs::msg::HingeJoint & j);
-std::string createUniversalJointMessage(const rcss3d_agent_msgs::msg::UniversalJoint & j);
+std::string createHingeJointVelMessage(const rcss3d_agent_msgs::msg::HingeJointVel & j);
+std::string createUniversalJointVelMessage(const rcss3d_agent_msgs::msg::UniversalJointVel & j);
 }
 
 }  // namespace rcss3d_agent
