@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "rcss3d_agent/rcss3d_agent_node.hpp"
-
 #include <netinet/tcp.h>
 #include <cmath>
 #include <string>
@@ -21,8 +19,7 @@
 #include <algorithm>
 #include <memory>
 
-#include "rcss3d_agent/sexp_creator.hpp"
-#include "rcss3d_agent/sexp_parser.hpp"
+#include "rcss3d_agent_node/rcss3d_agent_node.hpp"
 
 using namespace std::chrono_literals;
 

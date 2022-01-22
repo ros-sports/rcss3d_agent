@@ -19,8 +19,6 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_ros REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rosgraph_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
 find_package(rcss3d_agent_msgs REQUIRED)
 
 add_library(rcss3d_agent
@@ -39,10 +37,8 @@ target_include_directories(rcss3d_agent PUBLIC
   $<INSTALL_INTERFACE:include>)
 
 ament_target_dependencies(rcss3d_agent
-  "rclcpp"
-  "rosgraph_msgs"
-  "sensor_msgs"
-  "rcss3d_agent_msgs")
+  rclcpp
+  rcss3d_agent_msgs)
 
 # target_compile_options(rcss3d_agent PRIVATE -Werror)
 
@@ -62,18 +58,6 @@ install(
   RUNTIME DESTINATION bin
 )
 
-add_executable(rcss3d_agent_node
-  src/rcss3d_agent_node.cpp
-  src/main.cpp)
-target_include_directories(rcss3d_agent_node PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_link_libraries(rcss3d_agent_node rcss3d_agent)
-
-install(TARGETS rcss3d_agent_node
-  EXPORT export_${PROJECT_NAME}
-  DESTINATION lib/${PROJECT_NAME})
-
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   add_subdirectory(test)
@@ -92,7 +76,7 @@ ament_export_libraries(
   rcss3d_agent
 )
 ament_export_dependencies(
-  sensor_msgs
+  rclcpp
   rcss3d_agent_msgs
 )
 

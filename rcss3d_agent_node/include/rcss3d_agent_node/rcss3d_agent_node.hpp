@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCSS3D_AGENT__RCSS3D_AGENT_NODE_HPP_
-#define RCSS3D_AGENT__RCSS3D_AGENT_NODE_HPP_
+#ifndef RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_
+#define RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_
 
 #include <memory>
 #include <vector>
@@ -21,7 +21,6 @@
 
 #include "rclcpp/node.hpp"
 #include "rcss3d_agent/rcss3d_agent.hpp"
-#include "rcss3d_agent_msgs/msg/ball.hpp"
 #include "rcss3d_agent_msgs/msg/beam.hpp"
 
 namespace rcss3d_agent
@@ -47,4 +46,4 @@ private:
 
 }  // namespace rcss3d_agent
 
-#endif  // RCSS3D_AGENT__RCSS3D_AGENT_NODE_HPP_
+#endif  // RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_

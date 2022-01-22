@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include <memory>
-#include "rcss3d_agent/rcss3d_agent_node.hpp"
+#include "rcss3d_agent_node/rcss3d_agent_node.hpp"
 
 int main(int argc, char ** argv)
 {
