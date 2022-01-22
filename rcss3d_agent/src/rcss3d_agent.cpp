@@ -72,7 +72,7 @@ void Rcss3dAgent::handle(std::string const & msg)
 {
   SexpParser parsed(msg);
 
-  Percept percept;
+  rcss3d_agent_msgs::msg::Percept percept;
   percept.gyro_rate = parsed.getGyroRates();
   percept.hinge_joints = parsed.getHingeJoints();
   percept.universal_joints = parsed.getUniversalJoints();
@@ -92,12 +92,12 @@ void Rcss3dAgent::handle(std::string const & msg)
   }
 }
 
-void Rcss3dAgent::sendHingeJoint(const HingeJoint & j)
+void Rcss3dAgent::sendHingeJoint(const rcss3d_agent_msgs::msg::HingeJoint & j)
 {
   connection.send(sexp_creator::createHingeJointMessage(j));
 }
 
-void Rcss3dAgent::sendUniversalJoint(const UniversalJoint & j)
+void Rcss3dAgent::sendUniversalJoint(const rcss3d_agent_msgs::msg::UniversalJoint & j)
 {
   connection.send(sexp_creator::createUniversalJointMessage(j));
 }
@@ -107,18 +107,18 @@ void Rcss3dAgent::sendUniversalJoint(const UniversalJoint & j)
 
 // }
 
-void Rcss3dAgent::sendBeam(const Beam & b)
+void Rcss3dAgent::sendBeam(const rcss3d_agent_msgs::msg::Beam & b)
 {
   connection.send(sexp_creator::createBeamMessage(b));
 }
 
-void Rcss3dAgent::sendSay(const Say & s)
+void Rcss3dAgent::sendSay(const rcss3d_agent_msgs::msg::Say & s)
 {
   connection.send(sexp_creator::createSayMessage(s));
 }
 
 void Rcss3dAgent::registerPerceptCallback(
-  std::function<void(const Percept &)> callback)
+  std::function<void(const rcss3d_agent_msgs::msg::Percept &)> callback)
 {
   callbacksPercept.push_back(callback);
 }

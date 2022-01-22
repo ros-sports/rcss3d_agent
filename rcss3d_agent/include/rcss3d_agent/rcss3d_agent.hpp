@@ -49,12 +49,6 @@ public:
     std::function<void(const rcss3d_agent_msgs::msg::Percept &)> callback);
 
 private:
-  using Percept = rcss3d_agent_msgs::msg::Percept;
-  using HingeJoint = rcss3d_agent_msgs::msg::HingeJoint;
-  using Beam = rcss3d_agent_msgs::msg::Beam;
-  using UniversalJoint = rcss3d_agent_msgs::msg::UniversalJoint;
-  using Say = rcss3d_agent_msgs::msg::Say;
-
   Connection connection;
   std::thread receive_thread_;
   rclcpp::Logger logger;
@@ -64,7 +58,7 @@ private:
     std::string rcss3d_host, int rcss3d_port, std::string team, int unum);
 
   // Registered Callbacks
-  std::vector<std::function<void(const Percept &)>> callbacksPercept;
+  std::vector<std::function<void(const rcss3d_agent_msgs::msg::Percept &)>> callbacksPercept;
 };
 
 class Params
