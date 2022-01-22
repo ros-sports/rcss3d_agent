@@ -41,13 +41,13 @@ Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
   rcss3dAgent = std::make_unique<rcss3d_agent::Rcss3dAgent>(*params);
 
   // Create publisher
-  percept_pub_ =
+  perceptPub =
     create_publisher<rcss3d_agent_msgs::msg::Percept>("percept", 10);
 
   // Register callback
   rcss3dAgent->registerPerceptCallback(
     [this](const rcss3d_agent_msgs::msg::Percept & percept) {
-      percept_pub_->publish(std::make_unique<rcss3d_agent_msgs::msg::Percept>(percept));
+      perceptPub->publish(std::make_unique<rcss3d_agent_msgs::msg::Percept>(percept));
     });
 
   // Subscriptions
