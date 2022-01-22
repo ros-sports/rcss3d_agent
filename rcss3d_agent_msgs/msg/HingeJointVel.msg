@@ -5,5 +5,5 @@
 # Even if the hinge meets its extremity, it will bounce around at the extremity until a new
 # speed value is requested.
 
-string name
-float32 ax
+string name  # The name of the corresponding hinge joint
+float32 ax  # The angular velocity in radians per second

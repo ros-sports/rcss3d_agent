@@ -5,5 +5,5 @@
 # Each hinge joint has minimum and maximum limits on its angular position. This varies
 # from hinge to hinge and depends upon the model being used.
 
-string name  # The name of the corresponding hinge joint.
-float32 ax  # The current position angle in degrees.
+string name  # The name of the corresponding hinge joint
+float32 ax  # The current position angle in degrees
