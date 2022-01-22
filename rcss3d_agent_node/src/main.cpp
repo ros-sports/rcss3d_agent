@@ -18,7 +18,7 @@
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<rcss3d_agent::Rcss3dAgentNode>());
+  rclcpp::spin(std::make_shared<rcss3d_agent_node::Rcss3dAgentNode>());
   rclcpp::shutdown();
   return 0;
 }

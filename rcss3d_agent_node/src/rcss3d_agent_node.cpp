@@ -23,7 +23,7 @@
 
 using namespace std::chrono_literals;
 
-namespace rcss3d_agent
+namespace rcss3d_agent_node
 {
 
 Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
@@ -38,7 +38,7 @@ Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
 
   // Create Rcss3dAgent
   params = std::make_unique<rcss3d_agent::Params>(rcss3d_host, rcss3d_port, team, unum);
-  rcss3dAgent = std::make_unique<Rcss3dAgent>(*params);
+  rcss3dAgent = std::make_unique<rcss3d_agent::Rcss3dAgent>(*params);
 
   // Create publisher
   percept_pub_ =
@@ -84,4 +84,4 @@ Rcss3dAgentNode::~Rcss3dAgentNode()
 {
 }
 
-}  // namespace rcss3d_agent
+}  // namespace rcss3d_agent_node

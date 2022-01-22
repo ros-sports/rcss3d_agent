@@ -23,7 +23,7 @@
 #include "rcss3d_agent/rcss3d_agent.hpp"
 #include "rcss3d_agent_msgs/msg/beam.hpp"
 
-namespace rcss3d_agent
+namespace rcss3d_agent_node
 {
 
 class Rcss3dAgentNode : public rclcpp::Node
@@ -34,7 +34,7 @@ public:
 
 private:
   std::unique_ptr<rcss3d_agent::Params> params;
-  std::unique_ptr<Rcss3dAgent> rcss3dAgent;
+  std::unique_ptr<rcss3d_agent::Rcss3dAgent> rcss3dAgent;
 
   rclcpp::Publisher<rcss3d_agent_msgs::msg::Percept>::SharedPtr percept_pub_;
 
@@ -44,6 +44,6 @@ private:
   rclcpp::Subscription<rcss3d_agent_msgs::msg::Say>::SharedPtr saySub;
 };
 
-}  // namespace rcss3d_agent
+}  // namespace rcss3d_agent_node
 
 #endif  // RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_
