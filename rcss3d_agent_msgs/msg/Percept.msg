@@ -2,7 +2,7 @@
 # environment. The server sends perceptor messages to agents, via the network protocol, for every
 # cycle of the simulation. Details of each message type are explained in each msg file.
 
-GyroRate[] gyro_rate
+GyroRate[] gyro_rates
 HingeJointPos[] hinge_joints
 UniversalJointPos[] universal_joints
 ForceResistance[] force_resistances

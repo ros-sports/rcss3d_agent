@@ -73,7 +73,7 @@ void Rcss3dAgent::handle(std::string const & msg)
   SexpParser parsed(msg);
 
   rcss3d_agent_msgs::msg::Percept percept;
-  percept.gyro_rate = parsed.getGyroRates();
+  percept.gyro_rates = parsed.getGyroRates();
   percept.hinge_joints = parsed.getHingeJointPos();
   percept.universal_joints = parsed.getUniversalJointPos();
   percept.force_resistances = parsed.getForceResistances();
