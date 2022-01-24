@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCSS3D_AGENT__SEXP_CREATOR_HPP_
-#define RCSS3D_AGENT__SEXP_CREATOR_HPP_
+#ifndef SEXP_CREATOR_HPP_
+#define SEXP_CREATOR_HPP_
 
 #include <string>
 #include <vector>
@@ -38,4 +38,4 @@ std::string createUniversalJointVelMessage(const rcss3d_agent_msgs::msg::Univers
 
 }  // namespace rcss3d_agent
 
-#endif  // RCSS3D_AGENT__SEXP_CREATOR_HPP_
+#endif  // SEXP_CREATOR_HPP_

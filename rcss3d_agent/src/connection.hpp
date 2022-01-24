@@ -13,14 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCSS3D_AGENT__CONNECTION_HPP_
-#define RCSS3D_AGENT__CONNECTION_HPP_
+#ifndef CONNECTION_HPP_
+#define CONNECTION_HPP_
 
 #include <string>
 #include <vector>
 #include "rclcpp/rclcpp.hpp"
-#include "rcss3d_agent/socket.hpp"
-#include "rcss3d_agent/socketaddress.hpp"
+#include "./socket.hpp"
+#include "./socketaddress.hpp"
 
 namespace rcss3d_agent
 {
@@ -51,4 +51,4 @@ private:
 
 }  // namespace rcss3d_agent
 
-#endif  // RCSS3D_AGENT__CONNECTION_HPP_
+#endif  // CONNECTION_HPP_

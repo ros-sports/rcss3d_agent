@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCSS3D_AGENT__SEXP_PARSER_HPP_
-#define RCSS3D_AGENT__SEXP_PARSER_HPP_
+#ifndef SEXP_PARSER_HPP_
+#define SEXP_PARSER_HPP_
 
 #include <optional>
 #include <string>
@@ -62,4 +62,4 @@ private:
 
 }  // namespace rcss3d_agent
 
-#endif  // RCSS3D_AGENT__SEXP_PARSER_HPP_
+#endif  // SEXP_PARSER_HPP_

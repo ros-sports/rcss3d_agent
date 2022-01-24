@@ -14,7 +14,7 @@
 
 #include <gtest/gtest.h>
 #include <iostream>
-#include "rcss3d_agent/sexp_parser.hpp"
+#include "../src/sexp_parser.hpp"
 
 TEST(TestGyroRates, TestNoGyroRates)
 {

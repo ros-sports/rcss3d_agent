@@ -20,7 +20,6 @@
 #include <string>
 
 #include "rclcpp/rclcpp.hpp"
-#include "rcss3d_agent/connection.hpp"
 #include "rcss3d_agent_msgs/msg/hinge_joint_vel.hpp"
 #include "rcss3d_agent_msgs/msg/universal_joint_vel.hpp"
 #include "rcss3d_agent_msgs/msg/beam.hpp"
@@ -30,6 +29,7 @@
 namespace rcss3d_agent
 {
 class Params;
+class Connection;
 
 class Rcss3dAgent
 {
@@ -49,7 +49,7 @@ public:
     std::function<void(const rcss3d_agent_msgs::msg::Percept &)> callback);
 
 private:
-  Connection connection;
+  std::unique_ptr<Connection> connection;
   std::thread receive_thread_;
   rclcpp::Logger logger;
 

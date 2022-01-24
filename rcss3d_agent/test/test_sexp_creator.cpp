@@ -14,7 +14,7 @@
 
 #include <string>
 #include "gtest/gtest.h"
-#include "rcss3d_agent/sexp_creator.hpp"
+#include "../src/sexp_creator.hpp"
 
 TEST(TestSexpCreator, TestCreateBeamMessage)
 {

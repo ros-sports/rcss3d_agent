@@ -16,7 +16,7 @@
 #include <netinet/tcp.h>
 #include <string>
 #include <algorithm>
-#include "rcss3d_agent/connection.hpp"
+#include "./connection.hpp"
 #include "rclcpp/logger.hpp"
 
 namespace rcss3d_agent

@@ -21,8 +21,9 @@
 #include <algorithm>
 #include <memory>
 
-#include "rcss3d_agent/sexp_creator.hpp"
-#include "rcss3d_agent/sexp_parser.hpp"
+#include "./sexp_creator.hpp"
+#include "./sexp_parser.hpp"
+#include "./connection.hpp"
 
 using namespace std::chrono_literals;
 
@@ -30,7 +31,8 @@ namespace rcss3d_agent
 {
 
 Rcss3dAgent::Rcss3dAgent(const Params & p)
-: logger(rclcpp::get_logger("Rcss3dAgent"))
+: connection(std::make_unique<Connection>()),
+  logger(rclcpp::get_logger("Rcss3dAgent"))
 {
   // Declare parameters
   RCLCPP_DEBUG(logger, "Declare parameters");
@@ -39,22 +41,22 @@ Rcss3dAgent::Rcss3dAgent(const Params & p)
   logParametersToRclcppDebug(p.rcss3d_host, p.rcss3d_port, p.team, p.unum);
 
   // Initialise connection
-  connection.initialise(p.rcss3d_host, p.rcss3d_port);
+  connection->initialise(p.rcss3d_host, p.rcss3d_port);
 
   // Create the robot
-  connection.send(sexp_creator::createCreateMessage());
+  connection->send(sexp_creator::createCreateMessage());
 
   // Receive, this is needed for the init message to be sent next
-  connection.receive();
+  connection->receive();
 
   // Send init
-  connection.send(sexp_creator::createInitMessage(p.team, p.unum));
+  connection->send(sexp_creator::createInitMessage(p.team, p.unum));
 
   // Start receive loop
   receive_thread_ = std::thread(
     [this]() {
       while (rclcpp::ok()) {
-        std::string recv = connection.receive();
+        std::string recv = connection->receive();
         RCLCPP_DEBUG(this->logger, ("Received: " + recv).c_str());
         handle(recv);
       }
@@ -94,12 +96,12 @@ void Rcss3dAgent::handle(std::string const & msg)
 
 void Rcss3dAgent::sendHingeJointVel(const rcss3d_agent_msgs::msg::HingeJointVel & j)
 {
-  connection.send(sexp_creator::createHingeJointVelMessage(j));
+  connection->send(sexp_creator::createHingeJointVelMessage(j));
 }
 
 void Rcss3dAgent::sendUniversalJointVel(const rcss3d_agent_msgs::msg::UniversalJointVel & j)
 {
-  connection.send(sexp_creator::createUniversalJointVelMessage(j));
+  connection->send(sexp_creator::createUniversalJointVelMessage(j));
 }
 
 // void Rcss3dAgent::sendSynchronize()
@@ -109,12 +111,12 @@ void Rcss3dAgent::sendUniversalJointVel(const rcss3d_agent_msgs::msg::UniversalJ
 
 void Rcss3dAgent::sendBeam(const rcss3d_agent_msgs::msg::Beam & b)
 {
-  connection.send(sexp_creator::createBeamMessage(b));
+  connection->send(sexp_creator::createBeamMessage(b));
 }
 
 void Rcss3dAgent::sendSay(const rcss3d_agent_msgs::msg::Say & s)
 {
-  connection.send(sexp_creator::createSayMessage(s));
+  connection->send(sexp_creator::createSayMessage(s));
 }
 
 void Rcss3dAgent::registerPerceptCallback(

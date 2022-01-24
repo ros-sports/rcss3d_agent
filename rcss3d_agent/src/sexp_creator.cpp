@@ -16,7 +16,7 @@
 #include <utility>
 #include <vector>
 
-#include "rcss3d_agent/sexp_creator.hpp"
+#include "./sexp_creator.hpp"
 
 #define SEXPRESSO_OPT_OUT_PIKESTYLE
 #include "sexpresso/sexpresso.hpp"

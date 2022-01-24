@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCSS3D_AGENT__SOCKETADDRESS_HPP_
-#define RCSS3D_AGENT__SOCKETADDRESS_HPP_
+#ifndef SOCKETADDRESS_HPP_
+#define SOCKETADDRESS_HPP_
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -88,4 +88,4 @@ public:
 
 }  // namespace rcss3d_agent
 
-#endif  // RCSS3D_AGENT__SOCKETADDRESS_HPP_
+#endif  // SOCKETADDRESS_HPP_
