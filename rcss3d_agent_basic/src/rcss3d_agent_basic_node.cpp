@@ -19,14 +19,14 @@
 #include <algorithm>
 #include <memory>
 
-#include "rcss3d_agent_node/rcss3d_agent_node.hpp"
+#include "rcss3d_agent_basic/rcss3d_agent_basic_node.hpp"
 
 using namespace std::chrono_literals;
 
-namespace rcss3d_agent_node
+namespace rcss3d_agent_basic
 {
 
-Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
+Rcss3dAgentBasicNode::Rcss3dAgentBasicNode(const rclcpp::NodeOptions & options)
 : rclcpp::Node{"rcss3d_agent", options}
 {
   // Declare parameters
@@ -80,8 +80,11 @@ Rcss3dAgentNode::Rcss3dAgentNode(const rclcpp::NodeOptions & options)
     });
 }
 
-Rcss3dAgentNode::~Rcss3dAgentNode()
+Rcss3dAgentBasicNode::~Rcss3dAgentBasicNode()
 {
 }
 
-}  // namespace rcss3d_agent_node
+}  // namespace rcss3d_agent_basic
+
+#include "rclcpp_components/register_node_macro.hpp"
+RCLCPP_COMPONENTS_REGISTER_NODE(rcss3d_agent_basic::Rcss3dAgentBasicNode)

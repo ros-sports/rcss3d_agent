@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_
-#define RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_
+#ifndef RCSS3D_AGENT_BASIC__RCSS3D_AGENT_BASIC_NODE_HPP_
+#define RCSS3D_AGENT_BASIC__RCSS3D_AGENT_BASIC_NODE_HPP_
 
 #include <memory>
 #include <vector>
@@ -23,14 +23,14 @@
 #include "rcss3d_agent/rcss3d_agent.hpp"
 #include "rcss3d_agent_msgs/msg/beam.hpp"
 
-namespace rcss3d_agent_node
+namespace rcss3d_agent_basic
 {
 
-class Rcss3dAgentNode : public rclcpp::Node
+class Rcss3dAgentBasicNode : public rclcpp::Node
 {
 public:
-  explicit Rcss3dAgentNode(const rclcpp::NodeOptions & options = rclcpp::NodeOptions{});
-  virtual ~Rcss3dAgentNode();
+  explicit Rcss3dAgentBasicNode(const rclcpp::NodeOptions & options = rclcpp::NodeOptions{});
+  virtual ~Rcss3dAgentBasicNode();
 
 private:
   std::unique_ptr<rcss3d_agent::Params> params;
@@ -44,6 +44,6 @@ private:
   rclcpp::Subscription<rcss3d_agent_msgs::msg::Say>::SharedPtr saySub;
 };
 
-}  // namespace rcss3d_agent_node
+}  // namespace rcss3d_agent_basic
 
-#endif  // RCSS3D_AGENT_NODE__RCSS3D_AGENT_NODE_HPP_
+#endif  // RCSS3D_AGENT_BASIC__RCSS3D_AGENT_BASIC_NODE_HPP_
