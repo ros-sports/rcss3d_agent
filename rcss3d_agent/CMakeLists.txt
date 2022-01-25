@@ -47,7 +47,9 @@ ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 
 # Install
-install(DIRECTORY include/ DESTINATION include)
+install(
+  DIRECTORY include/
+  DESTINATION include)
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT export_${PROJECT_NAME}
