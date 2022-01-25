@@ -21,7 +21,12 @@ find_package(ament_cmake_ros REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rcss3d_agent_msgs REQUIRED)
 
-add_library(rcss3d_agent
+set(THIS_PACKAGE_INCLUDE_DEPENDS
+  rclcpp
+  rcss3d_agent_msgs)
+
+# Build
+add_library(${PROJECT_NAME}
   src/rcss3d_agent.cpp
   src/socket.cpp
   src/socketaddress.cpp
@@ -31,33 +36,27 @@ add_library(rcss3d_agent
   src/sexp_vision.cpp
   external/sexpresso/sexpresso/sexpresso.cpp)
 
-target_include_directories(rcss3d_agent PUBLIC
+target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/sexpresso>
   $<INSTALL_INTERFACE:include>)
 
-ament_target_dependencies(rcss3d_agent
-  rclcpp
-  rcss3d_agent_msgs)
+ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
-# target_compile_options(rcss3d_agent PRIVATE -Werror)
+ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 
-# Causes the visibility macros to use dllexport rather than dllimport,
-# which is appropriate when building the dll but not consuming it.
-target_compile_definitions(rcss3d_agent PRIVATE "RCSS3D_AGENT_BUILDING_LIBRARY")
-
+# Install
+install(DIRECTORY include/ DESTINATION include)
 install(
-  DIRECTORY include/
-  DESTINATION include
-)
-install(
-  TARGETS rcss3d_agent
+  TARGETS ${PROJECT_NAME}
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
-)
+  INCLUDES DESTINATION include)
 
+# Test
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   add_subdirectory(test)
@@ -66,18 +65,5 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_export_include_directories(
-  include
-)
-ament_export_targets(
-  export_${PROJECT_NAME}
-)
-ament_export_libraries(
-  rcss3d_agent
-)
-ament_export_dependencies(
-  rclcpp
-  rcss3d_agent_msgs
-)
-
+# Package
 ament_package()
