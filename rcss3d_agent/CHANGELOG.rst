@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2022-01-28)
+------------------
 * follow guidelines for ament library creation
 * move all non public hpp files into src directory
 * separate rcss3d_agent_node into separate package
