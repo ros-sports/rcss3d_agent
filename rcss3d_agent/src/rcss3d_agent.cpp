@@ -21,9 +21,9 @@
 #include <algorithm>
 #include <memory>
 
-#include "./sexp_creator.hpp"
-#include "./sexp_parser.hpp"
-#include "./connection.hpp"
+#include "sexp_creator.hpp"
+#include "sexp_parser.hpp"
+#include "connection.hpp"
 
 using namespace std::chrono_literals;
 

@@ -15,8 +15,8 @@
 #include <string>
 #include <vector>
 
-#include "./sexp_parser.hpp"
-#include "./sexp_vision.hpp"
+#include "sexp_parser.hpp"
+#include "sexp_vision.hpp"
 
 namespace rcss3d_agent
 {

@@ -19,8 +19,8 @@
 #include <string>
 #include <vector>
 #include "rclcpp/rclcpp.hpp"
-#include "./socket.hpp"
-#include "./socketaddress.hpp"
+#include "socket.hpp"
+#include "socketaddress.hpp"
 
 namespace rcss3d_agent
 {

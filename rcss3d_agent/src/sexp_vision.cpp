@@ -15,7 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "./sexp_vision.hpp"
+#include "sexp_vision.hpp"
 
 #define SEXPRESSO_OPT_OUT_PIKESTYLE
 #include "sexpresso/sexpresso.hpp"

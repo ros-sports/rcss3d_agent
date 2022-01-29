@@ -31,7 +31,7 @@ extern "C"
 
 #include <iosfwd>
 
-#include "./socketaddress.hpp"
+#include "socketaddress.hpp"
 
 namespace rcss3d_agent
 {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "./socket.hpp"
+#include "socket.hpp"
 
 namespace rcss3d_agent
 {

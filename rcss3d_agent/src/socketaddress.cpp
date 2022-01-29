@@ -20,7 +20,7 @@
 #include <algorithm>
 #include <string>
 
-#include "./socketaddress.hpp"
+#include "socketaddress.hpp"
 
 namespace rcss3d_agent
 {
