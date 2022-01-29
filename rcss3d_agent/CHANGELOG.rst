@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2022-01-29)
+------------------
 * adapt to new changes in cpplint about using a leading "./" in include statements
 * Contributors: ijnek
 
