@@ -116,7 +116,14 @@ void Rcss3dAgent::sendBeam(const rcss3d_agent_msgs::msg::Beam & b)
 
 void Rcss3dAgent::sendSay(const rcss3d_agent_msgs::msg::Say & s)
 {
-  connection->send(sexp_creator::createSayMessage(s));
+  if (!s.message.empty()) {
+    connection->send(sexp_creator::createSayMessage(s));
+  } else {
+    RCLCPP_ERROR(
+      logger,
+      "Say message was not sent as it was empty. Sending an empty Say message is prohibited "
+      "as it may cause undefined behaviour on the receiver end.");
+  }
 }
 
 void Rcss3dAgent::registerPerceptCallback(
