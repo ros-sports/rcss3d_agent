@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2022-02-03)
+------------------
 * add score left and score right to message received from simulator
 * don't rely on the order of items in sexp. Use their path. This prevents buggy code when the sexp is updated on the simulator end in the future.
 * comunicate that the node has to be restarted

@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2022-02-03)
+------------------
 * add score left and score right to message received from simulator
 * add team name to hear msg
 * Contributors: ijnek
