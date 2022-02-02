@@ -92,7 +92,7 @@ uint32_t Connection::receive_()
   auto len = socket_.readExactly(buffer_.data(), 4);
   if (len != 4) {
     RCLCPP_ERROR(
-      logger, "Disconnected from the simulator. Please restart rcss3d_agent.");
+      logger, "Disconnected from the simulator. Please restart this node.");
     return 0;
   }
 
@@ -104,7 +104,7 @@ uint32_t Connection::receive_()
   len = socket_.readExactly(buffer_.data(), prefix);
   if (len != uint64_t(prefix)) {
     RCLCPP_ERROR(
-      logger, "Disconnected from the simulator. Please restart rcss3d_agent.");
+      logger, "Disconnected from the simulator. Please restart this node.");
     return 0;
   }
   // Ensure string is 0-terminated
