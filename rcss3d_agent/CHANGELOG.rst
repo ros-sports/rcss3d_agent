@@ -2,6 +2,19 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add score left and score right to message received from simulator
+* don't rely on the order of items in sexp. Use their path. This prevents buggy code when the sexp is updated on the simulator end in the future.
+* comunicate that the node has to be restarted
+* make error msg easier to understand
+* make sure program can exit when connection to simulator is broken
+* add a model parameter so differnet types of robots can be loaded
+* don't allow sending empty say messages
+* add team name to hear msg
+* fix bug in gamestate parsing
+* Contributors: ijnek
+
 0.0.4 (2022-01-29)
 ------------------
 * adapt to new changes in cpplint about using a leading "./" in include statements
