@@ -167,7 +167,7 @@ TEST(TestVisions, TestHasVision)
 
 TEST(TestGameState, TestGameState)
 {
-  rcss3d_agent::SexpParser parser("(GS (t 2.50) (pm BeforeKickOff))");
+  rcss3d_agent::SexpParser parser("(GS (sl 0) (sr 0) (t 2.50) (pm BeforeKickOff))");
   auto gameState = parser.getGameState();
   EXPECT_EQ(gameState.time, 2.50);
   EXPECT_EQ(gameState.playmode, "BeforeKickOff");

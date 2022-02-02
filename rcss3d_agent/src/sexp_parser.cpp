@@ -135,11 +135,16 @@ std::optional<rcss3d_agent_msgs::msg::Vision> SexpParser::getVision()
 rcss3d_agent_msgs::msg::GameState SexpParser::getGameState()
 {
   rcss3d_agent_msgs::msg::GameState gameState;
-  if (auto * gameStateSexp = sexp.getChildByPath("GS"); gameStateSexp != nullptr) {
-    gameState.time = std::stof(gameStateSexp->value.sexp.at(1).value.sexp.at(1).value.str);
-    gameState.playmode = gameStateSexp->value.sexp.at(2).value.sexp.at(1).value.str;
+  if (auto * tSexp = sexp.getChildByPath("GS/t"); tSexp != nullptr) {
+    gameState.time = std::stof(tSexp->value.sexp.at(1).value.str);
   } else {
-    RCLCPP_ERROR(logger, "Can't find GameState in message received from rcssserver3d");
+    RCLCPP_ERROR(logger, "Can't find GameState time in message received from rcssserver3d");
+  }
+
+  if (auto * pmSexp = sexp.getChildByPath("GS/pm"); pmSexp != nullptr) {
+    gameState.playmode = pmSexp->value.sexp.at(1).value.str;
+  } else {
+    RCLCPP_ERROR(logger, "Can't find GameState playmode in message received from rcssserver3d");
   }
 
   return gameState;
