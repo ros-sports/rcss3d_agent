@@ -32,16 +32,21 @@ SexpParser::SexpParser(std::string msg)
 std::vector<rcss3d_agent_msgs::msg::GyroRate> SexpParser::getGyroRates()
 {
   std::vector<rcss3d_agent_msgs::msg::GyroRate> gyroRates;
-  for (auto const & arg : sexp.arguments()) {
+  for (auto & arg : sexp.arguments()) {
     // Gyro expressions have form: (GYR (n <name>) (rt <x> <y> <z>))
-    auto const & s = arg.value.sexp;
-    if (s.at(0).value.str == "GYR") {
-      rcss3d_agent_msgs::msg::GyroRate gyroRate;
-      gyroRate.name = s.at(1).value.sexp.at(1).value.str;
-      gyroRate.x = std::stof(s.at(2).value.sexp.at(1).value.str);
-      gyroRate.y = std::stof(s.at(2).value.sexp.at(2).value.str);
-      gyroRate.z = std::stof(s.at(2).value.sexp.at(3).value.str);
-      gyroRates.push_back(gyroRate);
+    if (arg.value.sexp.at(0).value.str == "GYR") {
+      auto * nSexp = arg.getChildByPath("n");
+      auto * rtSexp = arg.getChildByPath("rt");
+      if (nSexp && rtSexp) {
+        rcss3d_agent_msgs::msg::GyroRate gyroRate;
+        gyroRate.name = nSexp->value.sexp.at(1).value.str;
+        gyroRate.x = std::stof(rtSexp->value.sexp.at(1).value.str);
+        gyroRate.y = std::stof(rtSexp->value.sexp.at(2).value.str);
+        gyroRate.z = std::stof(rtSexp->value.sexp.at(3).value.str);
+        gyroRates.push_back(gyroRate);
+      } else {
+        RCLCPP_ERROR(logger, "Ignoring corrupted gyroscope.");
+      }
     }
   }
   return gyroRates;
@@ -50,14 +55,19 @@ std::vector<rcss3d_agent_msgs::msg::GyroRate> SexpParser::getGyroRates()
 std::vector<rcss3d_agent_msgs::msg::HingeJointPos> SexpParser::getHingeJointPos()
 {
   std::vector<rcss3d_agent_msgs::msg::HingeJointPos> hingeJoints;
-  for (auto const & arg : sexp.arguments()) {
+  for (auto & arg : sexp.arguments()) {
     // Joint expressions have form: (HJ (n <name>) (ax <ax>))
-    auto const & s = arg.value.sexp;
-    if (s.at(0).value.str == "HJ") {
-      rcss3d_agent_msgs::msg::HingeJointPos hingeJoint;
-      hingeJoint.name = s.at(1).value.sexp.at(1).value.str;
-      hingeJoint.ax = std::stof(s.at(2).value.sexp.at(1).value.str);
-      hingeJoints.push_back(hingeJoint);
+    if (arg.value.sexp.at(0).value.str == "HJ") {
+      auto * nSexp = arg.getChildByPath("n");
+      auto * axSexp = arg.getChildByPath("ax");
+      if (nSexp && axSexp) {
+        rcss3d_agent_msgs::msg::HingeJointPos hingeJoint;
+        hingeJoint.name = nSexp->value.sexp.at(1).value.str;
+        hingeJoint.ax = std::stof(axSexp->value.sexp.at(1).value.str);
+        hingeJoints.push_back(hingeJoint);
+      } else {
+        RCLCPP_ERROR(logger, "Ignoring corrupted hinge joint.");
+      }
     }
   }
   return hingeJoints;
@@ -66,15 +76,21 @@ std::vector<rcss3d_agent_msgs::msg::HingeJointPos> SexpParser::getHingeJointPos(
 std::vector<rcss3d_agent_msgs::msg::UniversalJointPos> SexpParser::getUniversalJointPos()
 {
   std::vector<rcss3d_agent_msgs::msg::UniversalJointPos> universalJoints;
-  for (auto const & arg : sexp.arguments()) {
+  for (auto & arg : sexp.arguments()) {
     // Joint expressions have form: (UJ (n <name>) (ax1 <ax1>) (ax2 <ax2>))
-    auto const & s = arg.value.sexp;
-    if (s.at(0).value.str == "UJ") {
-      rcss3d_agent_msgs::msg::UniversalJointPos universalJoint;
-      universalJoint.name = s.at(1).value.sexp.at(1).value.str;
-      universalJoint.ax1 = std::stof(s.at(2).value.sexp.at(1).value.str);
-      universalJoint.ax2 = std::stof(s.at(3).value.sexp.at(1).value.str);
-      universalJoints.push_back(universalJoint);
+    if (arg.value.sexp.at(0).value.str == "UJ") {
+      auto * nSexp = arg.getChildByPath("n");
+      auto * ax1Sexp = arg.getChildByPath("ax1");
+      auto * ax2Sexp = arg.getChildByPath("ax2");
+      if (nSexp && ax1Sexp && ax2Sexp) {
+        rcss3d_agent_msgs::msg::UniversalJointPos universalJoint;
+        universalJoint.name = nSexp->value.sexp.at(1).value.str;
+        universalJoint.ax1 = std::stof(ax1Sexp->value.sexp.at(1).value.str);
+        universalJoint.ax2 = std::stof(ax2Sexp->value.sexp.at(1).value.str);
+        universalJoints.push_back(universalJoint);
+      } else {
+        RCLCPP_ERROR(logger, "Ignoring corrupted universal joint.");
+      }
     }
   }
   return universalJoints;
@@ -83,19 +99,25 @@ std::vector<rcss3d_agent_msgs::msg::UniversalJointPos> SexpParser::getUniversalJ
 std::vector<rcss3d_agent_msgs::msg::ForceResistance> SexpParser::getForceResistances()
 {
   std::vector<rcss3d_agent_msgs::msg::ForceResistance> forceResistances;
-  for (auto const & arg : sexp.arguments()) {
+  for (auto & arg : sexp.arguments()) {
     // Joint expressions have form: (FRP (n <name>) (c <px> <py> <pz>) (f <fx> <fy> <fz>))
-    auto const & s = arg.value.sexp;
-    if (s.at(0).value.str == "FRP") {
-      rcss3d_agent_msgs::msg::ForceResistance forceResistance;
-      forceResistance.name = s.at(1).value.sexp.at(1).value.str;
-      forceResistance.px = std::stof(s.at(2).value.sexp.at(1).value.str);
-      forceResistance.py = std::stof(s.at(2).value.sexp.at(2).value.str);
-      forceResistance.pz = std::stof(s.at(2).value.sexp.at(3).value.str);
-      forceResistance.fx = std::stof(s.at(3).value.sexp.at(1).value.str);
-      forceResistance.fy = std::stof(s.at(3).value.sexp.at(2).value.str);
-      forceResistance.fz = std::stof(s.at(3).value.sexp.at(3).value.str);
-      forceResistances.push_back(forceResistance);
+    if (arg.value.sexp.at(0).value.str == "FRP") {
+      auto * nSexp = arg.getChildByPath("n");
+      auto * cSexp = arg.getChildByPath("c");
+      auto * fSexp = arg.getChildByPath("f");
+      if (nSexp && cSexp && fSexp) {
+        rcss3d_agent_msgs::msg::ForceResistance forceResistance;
+        forceResistance.name = nSexp->value.sexp.at(1).value.str;
+        forceResistance.px = std::stof(cSexp->value.sexp.at(1).value.str);
+        forceResistance.py = std::stof(cSexp->value.sexp.at(2).value.str);
+        forceResistance.pz = std::stof(cSexp->value.sexp.at(3).value.str);
+        forceResistance.fx = std::stof(fSexp->value.sexp.at(1).value.str);
+        forceResistance.fy = std::stof(fSexp->value.sexp.at(2).value.str);
+        forceResistance.fz = std::stof(fSexp->value.sexp.at(3).value.str);
+        forceResistances.push_back(forceResistance);
+      } else {
+        RCLCPP_ERROR(logger, "Ignoring corrupted force resistance.");
+      }
     }
   }
   return forceResistances;
@@ -104,16 +126,21 @@ std::vector<rcss3d_agent_msgs::msg::ForceResistance> SexpParser::getForceResista
 std::vector<rcss3d_agent_msgs::msg::Accelerometer> SexpParser::getAccelerometers()
 {
   std::vector<rcss3d_agent_msgs::msg::Accelerometer> accelerometers;
-  for (auto const & arg : sexp.arguments()) {
+  for (auto & arg : sexp.arguments()) {
     // Joint expressions have form: (ACC (n <name>) (a <x> <y> <z>))
-    auto const & s = arg.value.sexp;
-    if (s.at(0).value.str == "ACC") {
-      rcss3d_agent_msgs::msg::Accelerometer accelerometer;
-      accelerometer.name = s.at(1).value.sexp.at(1).value.str;
-      accelerometer.x = std::stof(s.at(2).value.sexp.at(1).value.str);
-      accelerometer.y = std::stof(s.at(2).value.sexp.at(2).value.str);
-      accelerometer.z = std::stof(s.at(2).value.sexp.at(3).value.str);
-      accelerometers.push_back(accelerometer);
+    if (arg.value.sexp.at(0).value.str == "ACC") {
+      auto * nSexp = arg.getChildByPath("n");
+      auto * aSexp = arg.getChildByPath("a");
+      if (nSexp && aSexp) {
+        rcss3d_agent_msgs::msg::Accelerometer accelerometer;
+        accelerometer.name = nSexp->value.sexp.at(1).value.str;
+        accelerometer.x = std::stof(aSexp->value.sexp.at(1).value.str);
+        accelerometer.y = std::stof(aSexp->value.sexp.at(2).value.str);
+        accelerometer.z = std::stof(aSexp->value.sexp.at(3).value.str);
+        accelerometers.push_back(accelerometer);
+      } else {
+        RCLCPP_ERROR(logger, "Ignoring corrupted accleerometer.");
+      }
     }
   }
   return accelerometers;
@@ -153,10 +180,16 @@ rcss3d_agent_msgs::msg::GameState SexpParser::getGameState()
 std::optional<rcss3d_agent_msgs::msg::AgentState> SexpParser::getAgentState()
 {
   if (auto * agentStateSexp = sexp.getChildByPath("AgentState"); agentStateSexp != nullptr) {
-    rcss3d_agent_msgs::msg::AgentState agentState;
-    agentState.temp = std::stof(agentStateSexp->value.sexp.at(1).value.sexp.at(1).value.str);
-    agentState.battery = std::stof(agentStateSexp->value.sexp.at(2).value.sexp.at(1).value.str);
-    return agentState;
+    auto * tempSexp = agentStateSexp->getChildByPath("temp");
+    auto * batterySexp = agentStateSexp->getChildByPath("battery");
+    if (tempSexp && batterySexp) {
+      rcss3d_agent_msgs::msg::AgentState agentState;
+      agentState.temp = std::stof(tempSexp->value.sexp.at(1).value.str);
+      agentState.battery = std::stof(batterySexp->value.sexp.at(1).value.str);
+      return agentState;
+    } else {
+      RCLCPP_ERROR(logger, "Ignoring corrupted agent state.");
+    }
   }
   return std::nullopt;
 }

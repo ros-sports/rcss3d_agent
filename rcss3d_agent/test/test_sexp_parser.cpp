@@ -35,6 +35,18 @@ TEST(TestGyroRates, TestOneGyroRate)
   EXPECT_NEAR(gyroRate.z, 0.46, 0.00001);
 }
 
+TEST(TestGyroRates, TestOneGyroRateDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(GYR (rt 0.01 0.07 0.46) (n torso))");
+  auto gyroRates = parser.getGyroRates();
+  ASSERT_EQ(gyroRates.size(), 1u);
+  auto gyroRate = gyroRates.at(0);
+  EXPECT_EQ(gyroRate.name, "torso");
+  EXPECT_NEAR(gyroRate.x, 0.01, 0.00001);
+  EXPECT_NEAR(gyroRate.y, 0.07, 0.00001);
+  EXPECT_NEAR(gyroRate.z, 0.46, 0.00001);
+}
+
 TEST(TestGyroRates, TestMultipleGyroRates)
 {
   rcss3d_agent::SexpParser parser(
@@ -60,6 +72,16 @@ TEST(TestHingeJointPos, TestOneHingeJointPos)
   EXPECT_NEAR(hingeJoint.ax, -1.02, 0.00001);
 }
 
+TEST(TestHingeJointPos, TestOneHingeJointPosDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(HJ (ax -1.02) (n laj3))");
+  auto hingeJoints = parser.getHingeJointPos();
+  ASSERT_EQ(hingeJoints.size(), 1u);
+  auto hingeJoint = hingeJoints.at(0);
+  EXPECT_EQ(hingeJoint.name, "laj3");
+  EXPECT_NEAR(hingeJoint.ax, -1.02, 0.00001);
+}
+
 TEST(TestHingeJointPos, TestMultipleHingeJointPos)
 {
   rcss3d_agent::SexpParser parser("(HJ (n laj3) (ax -1.02))(HJ (n laj4) (ax -1.03))");
@@ -74,9 +96,20 @@ TEST(TestUniversalJointPos, TestNoUniversalJointPos)
   EXPECT_EQ(universalJoints.size(), 0u);
 }
 
-TEST(TestUniversalJointPos, TestOneUniversalJointPo)
+TEST(TestUniversalJointPos, TestOneUniversalJointPos)
 {
   rcss3d_agent::SexpParser parser("(UJ (n laj1) (ax1 -1.32) (ax2 2.00))");
+  auto universalJoints = parser.getUniversalJointPos();
+  ASSERT_EQ(universalJoints.size(), 1u);
+  auto universalJoint = universalJoints.at(0);
+  EXPECT_EQ(universalJoint.name, "laj1");
+  EXPECT_NEAR(universalJoint.ax1, -1.32, 0.00001);
+  EXPECT_NEAR(universalJoint.ax2, 2.00, 0.00001);
+}
+
+TEST(TestUniversalJointPos, TestOneUniversalJointPosDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(UJ (ax2 2.00) (ax1 -1.32) (n laj1))");
   auto universalJoints = parser.getUniversalJointPos();
   ASSERT_EQ(universalJoints.size(), 1u);
   auto universalJoint = universalJoints.at(0);
@@ -103,6 +136,21 @@ TEST(TestForceResistances, TestNoForceResistances)
 TEST(TestForceResistances, TestOneForceResistance)
 {
   rcss3d_agent::SexpParser parser("(FRP (n lf) (c -0.14 0.08 -0.05) (f 1.12 -0.26 13.07))");
+  auto forceResistances = parser.getForceResistances();
+  ASSERT_EQ(forceResistances.size(), 1u);
+  auto forceResistance = forceResistances.at(0);
+  EXPECT_EQ(forceResistance.name, "lf");
+  EXPECT_NEAR(forceResistance.px, -0.14, 0.00001);
+  EXPECT_NEAR(forceResistance.py, 0.08, 0.00001);
+  EXPECT_NEAR(forceResistance.pz, -0.05, 0.00001);
+  EXPECT_NEAR(forceResistance.fx, 1.12, 0.00001);
+  EXPECT_NEAR(forceResistance.fy, -0.26, 0.00001);
+  EXPECT_NEAR(forceResistance.fz, 13.07, 0.00001);
+}
+
+TEST(TestForceResistances, TestOneForceResistanceDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(FRP (f 1.12 -0.26 13.07) (c -0.14 0.08 -0.05) (n lf))");
   auto forceResistances = parser.getForceResistances();
   ASSERT_EQ(forceResistances.size(), 1u);
   auto forceResistance = forceResistances.at(0);
@@ -143,6 +191,18 @@ TEST(TestAccelerometers, TestOneAccelerometer)
   EXPECT_NEAR(accelerometer.z, 9.81, 0.00001);
 }
 
+TEST(TestAccelerometers, TestOneAccelerometerDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(ACC (a 0.01 -0.01 9.81) (n torso))");
+  auto accelerometers = parser.getAccelerometers();
+  ASSERT_EQ(accelerometers.size(), 1u);
+  auto accelerometer = accelerometers.at(0);
+  EXPECT_EQ(accelerometer.name, "torso");
+  EXPECT_NEAR(accelerometer.x, 0.01, 0.00001);
+  EXPECT_NEAR(accelerometer.y, -0.01, 0.00001);
+  EXPECT_NEAR(accelerometer.z, 9.81, 0.00001);
+}
+
 TEST(TestAccelerometers, TestMultipleAccelerometers)
 {
   rcss3d_agent::SexpParser parser(
@@ -173,6 +233,14 @@ TEST(TestGameState, TestGameState)
   EXPECT_EQ(gameState.playmode, "BeforeKickOff");
 }
 
+TEST(TestGameState, TestGameStateDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(GS (pm BeforeKickOff) (t 2.50) (sl 0) (sr 0))");
+  auto gameState = parser.getGameState();
+  EXPECT_EQ(gameState.time, 2.50);
+  EXPECT_EQ(gameState.playmode, "BeforeKickOff");
+}
+
 TEST(TestAgentState, TestNoAgentState)
 {
   rcss3d_agent::SexpParser parser("");
@@ -183,6 +251,15 @@ TEST(TestAgentState, TestNoAgentState)
 TEST(TestAgentState, TestAgentState)
 {
   rcss3d_agent::SexpParser parser("(AgentState (temp 48) (battery 75))");
+  auto agentState = parser.getAgentState();
+  ASSERT_TRUE(agentState.has_value());
+  EXPECT_EQ(agentState.value().temp, 48);
+  EXPECT_EQ(agentState.value().battery, 75);
+}
+
+TEST(TestAgentState, TestAgentStateDifferentOrder)
+{
+  rcss3d_agent::SexpParser parser("(AgentState (battery 75) (temp 48))");
   auto agentState = parser.getAgentState();
   ASSERT_TRUE(agentState.has_value());
   EXPECT_EQ(agentState.value().temp, 48);
