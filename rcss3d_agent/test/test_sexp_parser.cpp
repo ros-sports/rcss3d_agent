@@ -198,32 +198,36 @@ TEST(TestHears, TestNoHears)
 
 TEST(TestHears, TestHearSelf)
 {
-  rcss3d_agent::SexpParser parser("(hear 12.3 self helloworld)");
+  rcss3d_agent::SexpParser parser("(hear teamFoo 12.3 self helloyourself)");
   auto hears = parser.getHears();
   ASSERT_EQ(hears.size(), 1u);
   auto hear = hears.at(0);
+  EXPECT_EQ(hear.team, "teamFoo");
   EXPECT_NEAR(hear.time, 12.3, 0.001);
   EXPECT_TRUE(hear.self);
   EXPECT_EQ(hear.direction.size(), 0u);
-  EXPECT_EQ(hear.message, "helloworld");
+  EXPECT_EQ(hear.message, "helloyourself");
 }
 
 TEST(TestHears, TestHearDirection)
 {
-  rcss3d_agent::SexpParser parser("(hear 12.3 -12.7 helloyourself)");
+  rcss3d_agent::SexpParser parser("(hear teamBar 12.3 -12.7 helloworld)");
   auto hears = parser.getHears();
   ASSERT_EQ(hears.size(), 1u);
   auto hear = hears.at(0);
+  EXPECT_EQ(hear.team, "teamBar");
   EXPECT_NEAR(hear.time, 12.3, 0.001);
   EXPECT_FALSE(hear.self);
   ASSERT_EQ(hear.direction.size(), 1u);
   EXPECT_NEAR(hear.direction.at(0), -12.7, 0.001);
-  EXPECT_EQ(hear.message, "helloyourself");
+  EXPECT_EQ(hear.message, "helloworld");
 }
 
 TEST(TestHears, TestMultipleHears)
 {
-  rcss3d_agent::SexpParser parser("(hear 12.3 self helloworld)(hear 12.3 -12.7 helloyourself)");
+  rcss3d_agent::SexpParser parser(
+    "(hear teamFoo 12.3 self helloyourself)"
+    "(hear teamBar 12.3 -12.7 helloworld)");
   auto hears = parser.getHears();
   EXPECT_EQ(hears.size(), 2u);
 }

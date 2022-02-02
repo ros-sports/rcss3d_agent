@@ -4,6 +4,7 @@
 #
 # See restrictions: https://gitlab.com/robocup-sim/SimSpark/-/wikis/Perceptors#restrictions
 
+string team  # The team of the player who sent the message
 float32 time  # The simulation time at which the given message was heard in seconds.
 bool self  # Whether the player is hearing their own words.
 float32[<=1] direction  # Direction of heard message, if the message wasn't the player's own words.

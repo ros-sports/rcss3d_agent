@@ -165,17 +165,18 @@ std::vector<rcss3d_agent_msgs::msg::Hear> SexpParser::getHears()
 {
   std::vector<rcss3d_agent_msgs::msg::Hear> hears;
   for (auto const & arg : sexp.arguments()) {
-    // Hears have form: (hear <time> self/<direction> <message>)
+    // Hears have form: (hear <team> <time> self/<direction> <message>)
     auto const & s = arg.value.sexp;
     if (s.at(0).value.str == "hear") {
       rcss3d_agent_msgs::msg::Hear hear;
-      hear.time = std::stof(s.at(1).value.str);
-      if (std::string arg2 = s.at(2).value.str; arg2 == "self") {
+      hear.team = s.at(1).value.str;
+      hear.time = std::stof(s.at(2).value.str);
+      if (std::string arg2 = s.at(3).value.str; arg2 == "self") {
         hear.self = true;
       } else {
         hear.direction.push_back(std::stof(arg2));
       }
-      hear.message = s.at(3).value.str;
+      hear.message = s.at(4).value.str;
       hears.push_back(hear);
     }
   }
