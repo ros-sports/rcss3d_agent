@@ -91,7 +91,9 @@ uint32_t Connection::receive_()
   buffer_.reserve(4);
   auto len = socket_.readExactly(buffer_.data(), 4);
   if (len != 4) {
-    RCLCPP_ERROR(logger, "Failed reading prefix");
+    RCLCPP_ERROR(
+      logger, "Failed reading prefix. Likely disconnected from the simulator. "
+      "Please restart rcss3d_agent.");
     return 0;
   }
 
@@ -102,7 +104,9 @@ uint32_t Connection::receive_()
   buffer_.reserve(prefix + 1);
   len = socket_.readExactly(buffer_.data(), prefix);
   if (len != uint64_t(prefix)) {
-    RCLCPP_ERROR(logger, "Failed reading prefix");
+    RCLCPP_ERROR(
+      logger, "Failed reading prefix. Likely disconnected from the simulator. "
+      "Please restart rcss3d_agent");
     return 0;
   }
   // Ensure string is 0-terminated

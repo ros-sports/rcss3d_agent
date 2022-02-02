@@ -57,8 +57,13 @@ Rcss3dAgent::Rcss3dAgent(const Params & p)
     [this]() {
       while (rclcpp::ok()) {
         std::string recv = connection->receive();
-        RCLCPP_DEBUG(this->logger, ("Received: " + recv).c_str());
-        handle(recv);
+        if (!recv.empty()) {
+          RCLCPP_DEBUG(this->logger, ("Received: " + recv).c_str());
+          handle(recv);
+        } else {
+          // Simulation connection broken, log to ERROR is done by connection.cpp
+          break;
+        }
       }
     });
 }
