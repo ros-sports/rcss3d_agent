@@ -227,18 +227,22 @@ TEST(TestVisions, TestHasVision)
 
 TEST(TestGameState, TestGameState)
 {
-  rcss3d_agent::SexpParser parser("(GS (sl 0) (sr 0) (t 2.50) (pm BeforeKickOff))");
+  rcss3d_agent::SexpParser parser("(GS (sl 1) (sr 2) (t 2.50) (pm BeforeKickOff))");
   auto gameState = parser.getGameState();
   EXPECT_EQ(gameState.time, 2.50);
   EXPECT_EQ(gameState.playmode, "BeforeKickOff");
+  EXPECT_EQ(gameState.score_left, 1);
+  EXPECT_EQ(gameState.score_right, 2);
 }
 
 TEST(TestGameState, TestGameStateDifferentOrder)
 {
-  rcss3d_agent::SexpParser parser("(GS (pm BeforeKickOff) (t 2.50) (sl 0) (sr 0))");
+  rcss3d_agent::SexpParser parser("(GS (pm BeforeKickOff) (t 2.50) (sr 2) (sl 1))");
   auto gameState = parser.getGameState();
   EXPECT_EQ(gameState.time, 2.50);
   EXPECT_EQ(gameState.playmode, "BeforeKickOff");
+  EXPECT_EQ(gameState.score_left, 1);
+  EXPECT_EQ(gameState.score_right, 2);
 }
 
 TEST(TestAgentState, TestNoAgentState)

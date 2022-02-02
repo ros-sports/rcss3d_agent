@@ -162,16 +162,29 @@ std::optional<rcss3d_agent_msgs::msg::Vision> SexpParser::getVision()
 rcss3d_agent_msgs::msg::GameState SexpParser::getGameState()
 {
   rcss3d_agent_msgs::msg::GameState gameState;
+
   if (auto * tSexp = sexp.getChildByPath("GS/t"); tSexp != nullptr) {
     gameState.time = std::stof(tSexp->value.sexp.at(1).value.str);
   } else {
-    RCLCPP_ERROR(logger, "Can't find GameState time in message received from rcssserver3d");
+    RCLCPP_ERROR(logger, "Can't find GameState time in message received from simulator");
   }
 
   if (auto * pmSexp = sexp.getChildByPath("GS/pm"); pmSexp != nullptr) {
     gameState.playmode = pmSexp->value.sexp.at(1).value.str;
   } else {
-    RCLCPP_ERROR(logger, "Can't find GameState playmode in message received from rcssserver3d");
+    RCLCPP_ERROR(logger, "Can't find GameState playmode in message received from simulator");
+  }
+
+  if (auto * slSexp = sexp.getChildByPath("GS/sl"); slSexp != nullptr) {
+    gameState.score_left = std::stod(slSexp->value.sexp.at(1).value.str);
+  } else {
+    RCLCPP_ERROR(logger, "Can't find GameState score left in message received from simulator");
+  }
+
+  if (auto * srSexp = sexp.getChildByPath("GS/sr"); srSexp != nullptr) {
+    gameState.score_right = std::stod(srSexp->value.sexp.at(1).value.str);
+  } else {
+    RCLCPP_ERROR(logger, "Can't find GameState score right in message received from simulator");
   }
 
   return gameState;

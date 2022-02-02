@@ -4,3 +4,5 @@
 
 float32 time  # The current play time in seconds
 string playmode  # The current play mode of the soccer game (eg. BeforeKickOff)
+int32 score_left  # The score of the left team
+int32 score_right  # The score of the right team
