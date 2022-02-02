@@ -38,13 +38,13 @@ Rcss3dAgent::Rcss3dAgent(const Params & p)
   RCLCPP_DEBUG(logger, "Declare parameters");
 
   // Log parameters for debugging
-  logParametersToRclcppDebug(p.rcss3d_host, p.rcss3d_port, p.team, p.unum);
+  logParametersToRclcppDebug(p.model, p.rcss3d_host, p.rcss3d_port, p.team, p.unum);
 
   // Initialise connection
   connection->initialise(p.rcss3d_host, p.rcss3d_port);
 
   // Create the robot
-  connection->send(sexp_creator::createCreateMessage());
+  connection->send(sexp_creator::createCreateMessage(p.model));
 
   // Receive, this is needed for the init message to be sent next
   connection->receive();
@@ -133,9 +133,10 @@ void Rcss3dAgent::registerPerceptCallback(
 }
 
 void Rcss3dAgent::logParametersToRclcppDebug(
-  std::string rcss3d_host, int rcss3d_port, std::string team, int unum)
+  std::string model, std::string rcss3d_host, int rcss3d_port, std::string team, int unum)
 {
   RCLCPP_DEBUG(logger, "Parameters: ");
+  RCLCPP_DEBUG(logger, "  model: %s", model.c_str());
   RCLCPP_DEBUG(logger, "  rcss3d/host: %s", rcss3d_host.c_str());
   RCLCPP_DEBUG(logger, "  rcss3d/port: %d", rcss3d_port);
   RCLCPP_DEBUG(logger, "  team: %s", team.c_str());

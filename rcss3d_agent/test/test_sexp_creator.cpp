@@ -16,6 +16,13 @@
 #include "gtest/gtest.h"
 #include "../src/sexp_creator.hpp"
 
+TEST(TestSexpCreator, TestCreateCreateMessage)
+{
+  std::string m = "rsg/agent/soccerbotcomp.rsg";
+  std::string msg = rcss3d_agent::sexp_creator::createCreateMessage(m);
+  EXPECT_EQ(msg, "(scene rsg/agent/soccerbotcomp.rsg)");
+}
+
 TEST(TestSexpCreator, TestCreateBeamMessage)
 {
   rcss3d_agent_msgs::msg::Beam b;

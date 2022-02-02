@@ -40,10 +40,10 @@ std::string createMessage(sexpresso::Sexp sexp, bool wrap = true)
   return msg;
 }
 
-std::string createCreateMessage()
+std::string createCreateMessage(const std::string & model)
 {
   auto sceneSexp = sexpresso::Sexp{"scene"};
-  sceneSexp.addChild("rsg/agent/nao/nao.rsg");
+  sceneSexp.addChild(model);
   return createMessage(sceneSexp);
 }
 

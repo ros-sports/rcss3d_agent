@@ -31,13 +31,14 @@ Rcss3dAgentBasicNode::Rcss3dAgentBasicNode(const rclcpp::NodeOptions & options)
 {
   // Declare parameters
   RCLCPP_DEBUG(get_logger(), "Declare parameters");
+  std::string model = this->declare_parameter<std::string>("model", "rsg/agent/nao/nao.rsg");
   std::string rcss3d_host = this->declare_parameter<std::string>("rcss3d/host", "127.0.0.1");
   int rcss3d_port = this->declare_parameter<int>("rcss3d/port", 3100);
   std::string team = this->declare_parameter<std::string>("team", "Anonymous");
   int unum = this->declare_parameter<int>("unum", 0);
 
   // Create Rcss3dAgent
-  params = std::make_unique<rcss3d_agent::Params>(rcss3d_host, rcss3d_port, team, unum);
+  params = std::make_unique<rcss3d_agent::Params>(model, rcss3d_host, rcss3d_port, team, unum);
   rcss3dAgent = std::make_unique<rcss3d_agent::Rcss3dAgent>(*params);
 
   // Create publisher

@@ -27,7 +27,7 @@ namespace rcss3d_agent
 
 namespace sexp_creator
 {
-std::string createCreateMessage();
+std::string createCreateMessage(const std::string & model);
 std::string createInitMessage(std::string const & team_name, int number);
 std::string createJointMessage(std::vector<std::string> names, std::vector<float> speeds);
 std::string createBeamMessage(const rcss3d_agent_msgs::msg::Beam & b);
