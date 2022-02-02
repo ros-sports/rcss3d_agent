@@ -33,10 +33,10 @@ public:
   virtual ~Rcss3dAgentBasicNode();
 
 private:
+  rclcpp::Publisher<rcss3d_agent_msgs::msg::Percept>::SharedPtr perceptPub;
+
   std::unique_ptr<rcss3d_agent::Params> params;
   std::unique_ptr<rcss3d_agent::Rcss3dAgent> rcss3dAgent;
-
-  rclcpp::Publisher<rcss3d_agent_msgs::msg::Percept>::SharedPtr perceptPub;
 
   rclcpp::Subscription<rcss3d_agent_msgs::msg::HingeJointVel>::SharedPtr hingeJointSub;
   rclcpp::Subscription<rcss3d_agent_msgs::msg::UniversalJointVel>::SharedPtr universalJointSub;
