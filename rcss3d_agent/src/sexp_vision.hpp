@@ -15,6 +15,7 @@
 #ifndef SEXP_VISION_HPP_
 #define SEXP_VISION_HPP_
 
+#include <optional>
 #include <vector>
 #include "rcss3d_agent_msgs/msg/ball.hpp"
 #include "rcss3d_agent_msgs/msg/field_line.hpp"
