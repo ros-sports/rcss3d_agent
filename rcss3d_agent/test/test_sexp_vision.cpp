@@ -18,11 +18,11 @@
 #define SEXPRESSO_OPT_OUT_PIKESTYLE
 #include "sexpresso/sexpresso.hpp"
 
-// Taken from https://gitlab.com/robocup-sim/SimSpark/-/wikis/Perceptors#vision-perceptors
-// There is one extra backet (typo) in the original wiki text which has been fixed here
 static const char * sexpEmpty = "See";
 static sexpresso::Sexp seeSexpEmpty = sexpresso::parse(sexpEmpty);
 
+// Taken from https://gitlab.com/robocup-sim/SimSpark/-/wikis/Perceptors#vision-perceptors
+// There is one extra backet (typo) in the original wiki text which has been fixed here
 static const char * sexp =
   "See "
   "(G2R (pol 17.55 -3.33 4.31)) "
