@@ -25,6 +25,7 @@ set(msg_files
   "msg/AgentState.msg"
   "msg/Ball.msg"
   "msg/Beam.msg"
+  "msg/Effector.msg"
   "msg/FieldLine.msg"
   "msg/Flag.msg"
   "msg/ForceResistance.msg"

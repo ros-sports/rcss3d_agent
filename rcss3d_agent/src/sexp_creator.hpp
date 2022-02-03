@@ -34,7 +34,8 @@ std::string createBeamMessage(const rcss3d_agent_msgs::msg::Beam & b);
 std::string createSayMessage(const rcss3d_agent_msgs::msg::Say & s);
 std::string createHingeJointVelMessage(const rcss3d_agent_msgs::msg::HingeJointVel & j);
 std::string createUniversalJointVelMessage(const rcss3d_agent_msgs::msg::UniversalJointVel & j);
-}
+std::string createSynchronizeMessage();
+}  // namespace sexp_creator
 
 }  // namespace rcss3d_agent
 

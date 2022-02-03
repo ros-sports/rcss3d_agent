@@ -59,3 +59,8 @@ TEST(TestSexpCreator, TestCreateUniversalJointVelMessage)
   std::string msg = rcss3d_agent::sexp_creator::createUniversalJointVelMessage(j);
   EXPECT_EQ(msg, "(lae1 -2.300000 1.200000)");
 }
+
+TEST(TestSexpCreator, TestCreateSynchronizeMessage)
+{
+  EXPECT_EQ(rcss3d_agent::sexp_creator::createSynchronizeMessage(), "(syn)");
+}

@@ -105,6 +105,11 @@ std::string createUniversalJointVelMessage(const rcss3d_agent_msgs::msg::Univers
   return createMessage(sexp);
 }
 
+std::string createSynchronizeMessage()
+{
+  return "(syn)";
+}
+
 }  // namespace sexp_creator
 
 }  // namespace rcss3d_agent

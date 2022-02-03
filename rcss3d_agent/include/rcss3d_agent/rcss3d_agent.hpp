@@ -40,9 +40,9 @@ public:
   // Functions to call to send message
   void sendHingeJointVel(const rcss3d_agent_msgs::msg::HingeJointVel & j);
   void sendUniversalJointVel(const rcss3d_agent_msgs::msg::UniversalJointVel & j);
-  // void sendSynchronize();
   void sendBeam(const rcss3d_agent_msgs::msg::Beam & b);
   void sendSay(const rcss3d_agent_msgs::msg::Say & s);
+  void sendSynchronize();
 
   // Register callback methods
   void registerPerceptCallback(

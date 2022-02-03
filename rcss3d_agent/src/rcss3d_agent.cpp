@@ -109,11 +109,6 @@ void Rcss3dAgent::sendUniversalJointVel(const rcss3d_agent_msgs::msg::UniversalJ
   connection->send(sexp_creator::createUniversalJointVelMessage(j));
 }
 
-// void Rcss3dAgent::sendSynchronize()
-// {
-
-// }
-
 void Rcss3dAgent::sendBeam(const rcss3d_agent_msgs::msg::Beam & b)
 {
   connection->send(sexp_creator::createBeamMessage(b));
@@ -129,6 +124,11 @@ void Rcss3dAgent::sendSay(const rcss3d_agent_msgs::msg::Say & s)
       "Say message was not sent as it was empty. Sending an empty Say message is prohibited "
       "as it may cause undefined behaviour on the receiver end.");
   }
+}
+
+void Rcss3dAgent::sendSynchronize()
+{
+  connection->send(sexp_creator::createSynchronizeMessage());
 }
 
 void Rcss3dAgent::registerPerceptCallback(
