@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.6 (2022-02-04)
+------------------
 * add missing include for std::optional
 * add effector msg to allow synchronize effector to be used
 * Contributors: ijnek, Scott K Logan

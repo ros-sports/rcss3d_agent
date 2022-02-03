@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.6 (2022-02-04)
+------------------
 * add Synchronize message
 * add effector msg to allow synchronize effector to be used
 * Contributors: ijnek
