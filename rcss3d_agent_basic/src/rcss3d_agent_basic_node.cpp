@@ -79,11 +79,30 @@ Rcss3dAgentBasicNode::Rcss3dAgentBasicNode(const rclcpp::NodeOptions & options)
     [this](rcss3d_agent_msgs::msg::Say::SharedPtr cmd) {
       rcss3dAgent->sendSay(*cmd);
     });
-  
+
   synchronizeSub =
     create_subscription<rcss3d_agent_msgs::msg::Synchronize>(
     "effectors/synchronize", rclcpp::ServicesQoS(),
     [this](rcss3d_agent_msgs::msg::Synchronize::SharedPtr) {
+      rcss3dAgent->sendSynchronize();
+    });
+
+  effectorSub =
+    create_subscription<rcss3d_agent_msgs::msg::Effector>(
+    "effector", rclcpp::ServicesQoS(),
+    [this](rcss3d_agent_msgs::msg::Effector::SharedPtr cmd) {
+      for (const auto & v : cmd->hinge_joint_vels) {
+        rcss3dAgent->sendHingeJointVel(v);
+      }
+      for (const auto & v : cmd->universal_joint_vels) {
+        rcss3dAgent->sendUniversalJointVel(v);
+      }
+      for (const auto & b : cmd->beams) {
+        rcss3dAgent->sendBeam(b);
+      }
+      for (const auto & s : cmd->says) {
+        rcss3dAgent->sendSay(s);
+      }
       rcss3dAgent->sendSynchronize();
     });
 }
