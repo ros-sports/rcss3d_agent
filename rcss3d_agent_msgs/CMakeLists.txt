@@ -39,6 +39,7 @@ set(msg_files
   "msg/Player.msg"
   "msg/Say.msg"
   "msg/Spherical.msg"
+  "msg/Synchronize.msg"
   "msg/UniversalJointPos.msg"
   "msg/UniversalJointVel.msg"
   "msg/Vision.msg")
