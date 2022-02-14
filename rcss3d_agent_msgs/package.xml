@@ -4,7 +4,7 @@
   <name>rcss3d_agent_msgs</name>
   <description>Custom messages for communicating with rcss3d_agent</description>
   <version>0.0.6</version>
-  <maintainer email="kenjibrameld@gmail.com">kenji</maintainer>
+  <maintainer email="kenjibrameld@gmail.com">ijnek</maintainer>
   <license>Apache License 2.0</license>
 
   <author>Sander G. van Dijk</author>
