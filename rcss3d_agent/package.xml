@@ -4,7 +4,7 @@
   <name>rcss3d_agent</name>
   <version>0.0.6</version>
   <description>Launches a RoboCup 3D Simulation Agent, and converts data to and from ROS2 msgs</description>
-  <maintainer email="kenjibrameld@gmail.com">kenji</maintainer>
+  <maintainer email="kenjibrameld@gmail.com">ijnek</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
