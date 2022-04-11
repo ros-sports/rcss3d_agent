@@ -32,8 +32,8 @@ std::optional<rcss3d_agent_msgs::msg::Ball> getBall(sexpresso::Sexp & seeSexp)
   if (ballSexp != nullptr) {
     rcss3d_agent_msgs::msg::Ball ball;
     ball.center.r = std::stof(ballSexp->value.sexp.at(1).value.str);
-    ball.center.theta = std::stof(ballSexp->value.sexp.at(2).value.str);
-    ball.center.phi = std::stof(ballSexp->value.sexp.at(3).value.str);
+    ball.center.phi = std::stof(ballSexp->value.sexp.at(2).value.str);
+    ball.center.theta = std::stof(ballSexp->value.sexp.at(3).value.str);
     return std::make_optional(ball);
   }
   return std::nullopt;
@@ -47,11 +47,11 @@ std::vector<rcss3d_agent_msgs::msg::FieldLine> getFieldLines(sexpresso::Sexp & s
     if (s.at(0).value.str == "L") {
       rcss3d_agent_msgs::msg::FieldLine fieldLine;
       fieldLine.start.r = std::stof(s.at(1).value.sexp.at(1).value.str);
-      fieldLine.start.theta = std::stof(s.at(1).value.sexp.at(2).value.str);
-      fieldLine.start.phi = std::stof(s.at(1).value.sexp.at(3).value.str);
+      fieldLine.start.phi = std::stof(s.at(1).value.sexp.at(2).value.str);
+      fieldLine.start.theta = std::stof(s.at(1).value.sexp.at(3).value.str);
       fieldLine.end.r = std::stof(s.at(2).value.sexp.at(1).value.str);
-      fieldLine.end.theta = std::stof(s.at(2).value.sexp.at(2).value.str);
-      fieldLine.end.phi = std::stof(s.at(2).value.sexp.at(3).value.str);
+      fieldLine.end.phi = std::stof(s.at(2).value.sexp.at(2).value.str);
+      fieldLine.end.theta = std::stof(s.at(2).value.sexp.at(3).value.str);
       fieldLines.push_back(fieldLine);
     }
   }
@@ -69,8 +69,8 @@ std::vector<rcss3d_agent_msgs::msg::Flag> getFlags(sexpresso::Sexp & seeSexp)
       rcss3d_agent_msgs::msg::Flag flag;
       flag.name = flagName;
       flag.base.r = std::stof(flagSexp->value.sexp.at(1).value.str);
-      flag.base.theta = std::stof(flagSexp->value.sexp.at(2).value.str);
-      flag.base.phi = std::stof(flagSexp->value.sexp.at(3).value.str);
+      flag.base.phi = std::stof(flagSexp->value.sexp.at(2).value.str);
+      flag.base.theta = std::stof(flagSexp->value.sexp.at(3).value.str);
       flags.push_back(flag);
     }
   }
@@ -89,8 +89,8 @@ std::vector<rcss3d_agent_msgs::msg::Goalpost> getGoalposts(sexpresso::Sexp & see
       rcss3d_agent_msgs::msg::Goalpost post;
       post.name = postName;
       post.top.r = std::stof(postSexp->value.sexp.at(1).value.str);
-      post.top.theta = std::stof(postSexp->value.sexp.at(2).value.str);
-      post.top.phi = std::stof(postSexp->value.sexp.at(3).value.str);
+      post.top.phi = std::stof(postSexp->value.sexp.at(2).value.str);
+      post.top.theta = std::stof(postSexp->value.sexp.at(3).value.str);
       goalposts.push_back(post);
     }
   }
@@ -114,8 +114,8 @@ std::vector<rcss3d_agent_msgs::msg::Player> getPlayers(sexpresso::Sexp & seeSexp
         auto bodyPartPolSexp = s.at(i).value.sexp.at(1).value.sexp;
         rcss3d_agent_msgs::msg::Spherical spherical;
         spherical.r = std::stof(bodyPartPolSexp.at(1).value.str);
-        spherical.theta = std::stof(bodyPartPolSexp.at(2).value.str);
-        spherical.phi = std::stof(bodyPartPolSexp.at(3).value.str);
+        spherical.phi = std::stof(bodyPartPolSexp.at(2).value.str);
+        spherical.theta = std::stof(bodyPartPolSexp.at(3).value.str);
 
         std::string bodyPart = s.at(i).value.sexp.at(0).value.str;
         if (bodyPart == "head") {

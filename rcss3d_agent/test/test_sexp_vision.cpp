@@ -56,8 +56,8 @@ TEST(TestBall, TestHasBall)
   // (B (pol 8.51 -0.21 -0.17))
   rcss3d_agent_msgs::msg::Ball & ball = ball_optional.value();
   EXPECT_NEAR(ball.center.r, 8.51, 0.01);
-  EXPECT_NEAR(ball.center.theta, -0.21, 0.01);
-  EXPECT_NEAR(ball.center.phi, -0.17, 0.01);
+  EXPECT_NEAR(ball.center.phi, -0.21, 0.01);
+  EXPECT_NEAR(ball.center.theta, -0.17, 0.01);
 }
 
 TEST(TestFieldLines, TestNoFieldLines)
@@ -73,20 +73,20 @@ TEST(TestFieldLines, TestFieldLines)
   // (L (pol 12.11 -40.77 -2.40) (pol 12.95 -37.76 -2.41))
   rcss3d_agent_msgs::msg::FieldLine & line1 = fieldLines.at(0);
   EXPECT_NEAR(line1.start.r, 12.11, 0.01);
-  EXPECT_NEAR(line1.start.theta, -40.77, 0.01);
-  EXPECT_NEAR(line1.start.phi, -2.40, 0.01);
+  EXPECT_NEAR(line1.start.phi, -40.77, 0.01);
+  EXPECT_NEAR(line1.start.theta, -2.40, 0.01);
   EXPECT_NEAR(line1.end.r, 12.95, 0.01);
-  EXPECT_NEAR(line1.end.theta, -37.76, 0.01);
-  EXPECT_NEAR(line1.end.phi, -2.41, 0.01);
+  EXPECT_NEAR(line1.end.phi, -37.76, 0.01);
+  EXPECT_NEAR(line1.end.theta, -2.41, 0.01);
 
   // (L (pol 12.97 -37.56 -2.24) (pol 13.32 -32.98 -2.20))
   rcss3d_agent_msgs::msg::FieldLine & line2 = fieldLines.at(1);
   EXPECT_NEAR(line2.start.r, 12.97, 0.01);
-  EXPECT_NEAR(line2.start.theta, -37.56, 0.01);
-  EXPECT_NEAR(line2.start.phi, -2.24, 0.01);
+  EXPECT_NEAR(line2.start.phi, -37.56, 0.01);
+  EXPECT_NEAR(line2.start.theta, -2.24, 0.01);
   EXPECT_NEAR(line2.end.r, 13.32, 0.01);
-  EXPECT_NEAR(line2.end.theta, -32.98, 0.01);
-  EXPECT_NEAR(line2.end.phi, -2.20, 0.01);
+  EXPECT_NEAR(line2.end.phi, -32.98, 0.01);
+  EXPECT_NEAR(line2.end.theta, -2.20, 0.01);
 }
 
 
@@ -106,15 +106,15 @@ TEST(TestGoalposts, TestGoalposts)
   rcss3d_agent_msgs::msg::Goalpost & post1 = goalposts.at(0);
   EXPECT_EQ(post1.name, "G1R");
   EXPECT_NEAR(post1.top.r, 17.52, 0.01);
-  EXPECT_NEAR(post1.top.theta, 3.27, 0.01);
-  EXPECT_NEAR(post1.top.phi, 4.07, 0.01);
+  EXPECT_NEAR(post1.top.phi, 3.27, 0.01);
+  EXPECT_NEAR(post1.top.theta, 4.07, 0.01);
 
   // (G2R (pol 17.55 -3.33 4.31))
   rcss3d_agent_msgs::msg::Goalpost & post2 = goalposts.at(1);
   EXPECT_EQ(post2.name, "G2R");
   EXPECT_NEAR(post2.top.r, 17.55, 0.01);
-  EXPECT_NEAR(post2.top.theta, -3.33, 0.01);
-  EXPECT_NEAR(post2.top.phi, 4.31, 0.01);
+  EXPECT_NEAR(post2.top.phi, -3.33, 0.01);
+  EXPECT_NEAR(post2.top.theta, 4.31, 0.01);
 }
 
 TEST(TestFlags, TestNoFlags)
@@ -132,14 +132,14 @@ TEST(TestFlags, TestFlags)
   // "(F1R (pol 18.52 18.94 1.54)) "
   rcss3d_agent_msgs::msg::Flag & flag1 = flags.at(0);
   EXPECT_NEAR(flag1.base.r, 18.52, 0.01);
-  EXPECT_NEAR(flag1.base.theta, 18.94, 0.01);
-  EXPECT_NEAR(flag1.base.phi, 1.54, 0.01);
+  EXPECT_NEAR(flag1.base.phi, 18.94, 0.01);
+  EXPECT_NEAR(flag1.base.theta, 1.54, 0.01);
 
   // "(F2R (pol 18.52 -18.91 1.52)) "
   rcss3d_agent_msgs::msg::Flag & flag2 = flags.at(1);
   EXPECT_NEAR(flag2.base.r, 18.52, 0.01);
-  EXPECT_NEAR(flag2.base.theta, -18.91, 0.01);
-  EXPECT_NEAR(flag2.base.phi, 1.52, 0.01);
+  EXPECT_NEAR(flag2.base.phi, -18.91, 0.01);
+  EXPECT_NEAR(flag2.base.theta, 1.52, 0.01);
 }
 
 TEST(TestPlayers, TestNoPlayers)
@@ -162,32 +162,32 @@ TEST(TestPlayers, TestPlayers)
   // "(head (pol 16.98 -0.21 3.19)) "
   ASSERT_EQ(player1.head.size(), 1u);
   EXPECT_NEAR(player1.head.at(0).r, 16.98, 0.01);
-  EXPECT_NEAR(player1.head.at(0).theta, -0.21, 0.01);
-  EXPECT_NEAR(player1.head.at(0).phi, 3.19, 0.01);
+  EXPECT_NEAR(player1.head.at(0).phi, -0.21, 0.01);
+  EXPECT_NEAR(player1.head.at(0).theta, 3.19, 0.01);
 
   // "(rlowerarm (pol 16.83 -0.06 2.80)) "
   ASSERT_EQ(player1.rlowerarm.size(), 1u);
   EXPECT_NEAR(player1.rlowerarm.at(0).r, 16.83, 0.01);
-  EXPECT_NEAR(player1.rlowerarm.at(0).theta, -0.06, 0.01);
-  EXPECT_NEAR(player1.rlowerarm.at(0).phi, 2.80, 0.01);
+  EXPECT_NEAR(player1.rlowerarm.at(0).phi, -0.06, 0.01);
+  EXPECT_NEAR(player1.rlowerarm.at(0).theta, 2.80, 0.01);
 
   // "(llowerarm (pol 16.86 -0.36 3.10)) "
   ASSERT_EQ(player1.llowerarm.size(), 1u);
   EXPECT_NEAR(player1.llowerarm.at(0).r, 16.86, 0.01);
-  EXPECT_NEAR(player1.llowerarm.at(0).theta, -0.36, 0.01);
-  EXPECT_NEAR(player1.llowerarm.at(0).phi, 3.10, 0.01);
+  EXPECT_NEAR(player1.llowerarm.at(0).phi, -0.36, 0.01);
+  EXPECT_NEAR(player1.llowerarm.at(0).theta, 3.10, 0.01);
 
   // "(rfoot (pol 17.00 0.29 1.68)) "
   ASSERT_EQ(player1.rfoot.size(), 1u);
   EXPECT_NEAR(player1.rfoot.at(0).r, 17.00, 0.01);
-  EXPECT_NEAR(player1.rfoot.at(0).theta, 0.29, 0.01);
-  EXPECT_NEAR(player1.rfoot.at(0).phi, 1.68, 0.01);
+  EXPECT_NEAR(player1.rfoot.at(0).phi, 0.29, 0.01);
+  EXPECT_NEAR(player1.rfoot.at(0).theta, 1.68, 0.01);
 
   // "(lfoot (pol 16.95 -0.51 1.32))) "
   ASSERT_EQ(player1.lfoot.size(), 1u);
   EXPECT_NEAR(player1.lfoot.at(0).r, 16.95, 0.01);
-  EXPECT_NEAR(player1.lfoot.at(0).theta, -0.51, 0.01);
-  EXPECT_NEAR(player1.lfoot.at(0).phi, 1.32, 0.01);
+  EXPECT_NEAR(player1.lfoot.at(0).phi, -0.51, 0.01);
+  EXPECT_NEAR(player1.lfoot.at(0).theta, 1.32, 0.01);
 
   // Player2
   rcss3d_agent_msgs::msg::Player & player2 = players.at(1);
@@ -199,12 +199,12 @@ TEST(TestPlayers, TestPlayers)
   // "(rlowerarm (pol 0.18 -33.55 -20.16)) "
   ASSERT_EQ(player2.rlowerarm.size(), 1u);
   EXPECT_NEAR(player2.rlowerarm.at(0).r, 0.18, 0.01);
-  EXPECT_NEAR(player2.rlowerarm.at(0).theta, -33.55, 0.01);
-  EXPECT_NEAR(player2.rlowerarm.at(0).phi, -20.16, 0.01);
+  EXPECT_NEAR(player2.rlowerarm.at(0).phi, -33.55, 0.01);
+  EXPECT_NEAR(player2.rlowerarm.at(0).theta, -20.16, 0.01);
 
   // "(llowerarm (pol 0.18 34.29 -19.80))) "
   ASSERT_EQ(player2.llowerarm.size(), 1u);
   EXPECT_NEAR(player2.llowerarm.at(0).r, 0.18, 0.01);
-  EXPECT_NEAR(player2.llowerarm.at(0).theta, 34.29, 0.01);
-  EXPECT_NEAR(player2.llowerarm.at(0).phi, -19.80, 0.01);
+  EXPECT_NEAR(player2.llowerarm.at(0).phi, 34.29, 0.01);
+  EXPECT_NEAR(player2.llowerarm.at(0).theta, -19.80, 0.01);
 }
