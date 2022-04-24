@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.7 (2022-04-24)
+------------------
 * fix phi and theta being swapped around
 * Update package.xml maintainer
 * Contributors: Kenji Brameld
