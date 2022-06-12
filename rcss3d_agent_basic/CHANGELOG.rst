@@ -2,6 +2,9 @@
 Changelog for package rcss3d_agent_basic
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.7 (2022-04-24)
+------------------
+
 0.0.6 (2022-02-04)
 ------------------
 * add synchronize subscription

@@ -2,6 +2,12 @@
 Changelog for package rcss3d_agent_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.7 (2022-04-24)
+------------------
+* fix phi and theta being swapped around
+* Update package.xml maintainer
+* Contributors: Kenji Brameld
+
 0.0.6 (2022-02-04)
 ------------------
 * add Synchronize message
