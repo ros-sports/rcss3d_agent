@@ -2,6 +2,9 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.7 (2022-04-24)
 ------------------
 * fix phi and theta being swapped around
