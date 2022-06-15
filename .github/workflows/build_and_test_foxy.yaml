@@ -6,11 +6,11 @@ name: Build and Test (foxy)
 on:
   # Triggers the workflow on push
   push:
-    branches: [ rolling ]
+    branches: [ foxy ]
 
   # Triggers the workflow on pull requests
   pull_request:
-    branches: [ rolling ]
+    branches: [ foxy ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:focal    
+      image: ubuntu:focal
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
