@@ -220,9 +220,22 @@ TEST(TestVisions, TestNoVision)
 
 TEST(TestVisions, TestHasVision)
 {
-  rcss3d_agent::SexpParser parser("(See)");
-  auto vision = parser.getVision();
-  EXPECT_TRUE(vision.has_value());
+  rcss3d_agent::SexpParser parser(
+    "(See "
+    "(G2R (pol 17.55 -3.33 4.31)) "
+    "(F1R (pol 18.52 18.94 1.54)) "
+    "(B (pol 8.51 -0.21 -0.17)) "
+    "(P (team teamRed) (id 1) (head (pol 16.98 -0.21 3.19))) "
+    "(L (pol 12.11 -40.77 -2.40) (pol 12.95 -37.76 -2.41)))");
+  auto visionOptional = parser.getVision();
+  ASSERT_TRUE(visionOptional.has_value());
+
+  auto & vision = visionOptional.value();
+  EXPECT_EQ(vision.goalposts.size(), 1u);
+  EXPECT_EQ(vision.flags.size(), 1u);
+  EXPECT_EQ(vision.ball.size(), 1u);
+  EXPECT_EQ(vision.players.size(), 1u);
+  EXPECT_EQ(vision.field_lines.size(), 1u);
 }
 
 TEST(TestGameState, TestGameState)
