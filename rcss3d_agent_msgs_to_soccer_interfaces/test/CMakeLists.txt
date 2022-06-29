@@ -1,8 +1,8 @@
-# Build test_sim_to_soccer_vision_3d
-ament_add_gtest(test_sim_to_soccer_vision_3d
-  test_sim_to_soccer_vision_3d.cpp)
+# Build test_conversion
+ament_add_gtest(test_conversion
+  test_conversion.cpp)
 
-target_link_libraries(test_sim_to_soccer_vision_3d
+target_link_libraries(test_conversion
   ${PROJECT_NAME})
 
 # Build test_polar_to_point

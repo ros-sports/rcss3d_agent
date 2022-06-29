@@ -15,7 +15,7 @@
 #ifndef DEG2RAD_HPP_
 #define DEG2RAD_HPP_
 
-namespace rcss3d_agent_soccer
+namespace rcss3d_agent_msgs_to_soccer_interfaces
 {
 
 static constexpr double deg2rad(double deg)
@@ -24,6 +24,6 @@ static constexpr double deg2rad(double deg)
 }
 
 
-}  // namespace rcss3d_agent_soccer
+}  // namespace rcss3d_agent_msgs_to_soccer_interfaces
 
 #endif  // DEG2RAD_HPP_

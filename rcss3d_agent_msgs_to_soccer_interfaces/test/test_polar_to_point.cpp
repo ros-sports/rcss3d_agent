@@ -21,12 +21,12 @@ TEST(TestPolarToPoint, Test1)
   float phi = -0.05811;
   float theta = 0.07522;
 
-  geometry_msgs::msg::Point point = rcss3d_agent_soccer::polar_to_point(dist, phi, theta);
+  geometry_msgs::msg::Point point = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
+    dist, phi, theta);
 
   // True values were manually calculated by hand
   EXPECT_NEAR(point.x, 17.4708, 0.01);
   EXPECT_NEAR(point.y, -1.0165, 0.01);
-  EXPECT_NEAR(point.z, 1.3189, 0.01);
 }
 
 TEST(TestPolarToPoint, Test2)
@@ -35,7 +35,8 @@ TEST(TestPolarToPoint, Test2)
   float phi = -0.00367;
   float theta = -0.00297;
 
-  geometry_msgs::msg::Point point = rcss3d_agent_soccer::polar_to_point(dist, phi, theta);
+  geometry_msgs::msg::Point point = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
+    dist, phi, theta);
 
   // True values were manually calculated by hand
   EXPECT_NEAR(point.x, 8.5099, 0.01);

@@ -16,12 +16,12 @@
 #include <optional>
 #include "rcss3d_agent_msgs/msg/ball.hpp"
 #include "rcss3d_agent_msgs/msg/spherical.hpp"
-#include "rcss3d_agent_soccer/sim_to_soccer_vision_3d.hpp"
+#include "rcss3d_agent_msgs_to_soccer_interfaces/conversion.hpp"
 #include "../src/polar_to_point.hpp"
 
 TEST(SimToSoccerVision3D, TestBallArrayNoBall)
 {
-  auto ballArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getBallArray(std::nullopt);
+  auto ballArray = rcss3d_agent_msgs_to_soccer_interfaces::getBallArray(std::nullopt);
   EXPECT_EQ(ballArray.balls.size(), 0u);
 }
 
@@ -32,7 +32,7 @@ TEST(SimToSoccerVision3D, TestBallArrayOneBall)
   ball.center.phi = 45;
   ball.center.theta = 45;
 
-  auto ballArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getBallArray(ball);
+  auto ballArray = rcss3d_agent_msgs_to_soccer_interfaces::getBallArray(ball);
 
   EXPECT_EQ(ballArray.header.frame_id, "CameraTop_frame");
   EXPECT_EQ(ballArray.balls.size(), 1u);
@@ -43,7 +43,7 @@ TEST(SimToSoccerVision3D, TestBallArrayOneBall)
 
 TEST(SimToSoccerVision3D, TestGoalpostArrayNoBall)
 {
-  auto goalpostArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getGoalpostArray({});
+  auto goalpostArray = rcss3d_agent_msgs_to_soccer_interfaces::getGoalpostArray({});
   EXPECT_EQ(goalpostArray.posts.size(), 0u);
 }
 
@@ -54,7 +54,7 @@ TEST(SimToSoccerVision3D, TestGoalpostArrayOneGoalpost)
   goalpost.top.phi = 45;
   goalpost.top.theta = 45;
 
-  auto goalpostArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getGoalpostArray({goalpost});
+  auto goalpostArray = rcss3d_agent_msgs_to_soccer_interfaces::getGoalpostArray({goalpost});
 
   EXPECT_EQ(goalpostArray.header.frame_id, "CameraTop_frame");
   EXPECT_EQ(goalpostArray.posts.size(), 1u);
@@ -79,13 +79,13 @@ TEST(SimToSoccerVision3D, TestGoalpostArrayMultipleGoalposts)
 {
   std::vector<rcss3d_agent_msgs::msg::Goalpost> goalposts(2);
 
-  auto goalpostArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getGoalpostArray(goalposts);
+  auto goalpostArray = rcss3d_agent_msgs_to_soccer_interfaces::getGoalpostArray(goalposts);
   EXPECT_EQ(goalpostArray.posts.size(), 2u);
 }
 
 TEST(SimToSoccerVision3D, TestGoalpostArrayNoFieldLines)
 {
-  auto markingArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getMarkingArray({});
+  auto markingArray = rcss3d_agent_msgs_to_soccer_interfaces::getMarkingArray({});
   EXPECT_EQ(markingArray.segments.size(), 0u);
 }
 
@@ -99,7 +99,7 @@ TEST(SimToSoccerVision3D, TestGoalpostArrayOneFieldLine)
   fieldLine.end.phi = -45;
   fieldLine.end.theta = 45;
 
-  auto markingArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getMarkingArray({fieldLine});
+  auto markingArray = rcss3d_agent_msgs_to_soccer_interfaces::getMarkingArray({fieldLine});
   EXPECT_EQ(markingArray.header.frame_id, "CameraTop_frame");
   EXPECT_EQ(markingArray.segments.size(), 1u);
   EXPECT_NEAR(markingArray.segments[0].start.x, 0.5, 0.01);
@@ -114,13 +114,13 @@ TEST(SimToSoccerVision3D, TestGoalpostArrayMultipleFieldLines)
 {
   std::vector<rcss3d_agent_msgs::msg::FieldLine> fieldLines(2);
 
-  auto markingArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getMarkingArray(fieldLines);
+  auto markingArray = rcss3d_agent_msgs_to_soccer_interfaces::getMarkingArray(fieldLines);
   EXPECT_EQ(markingArray.segments.size(), 2u);
 }
 
 TEST(SimToSoccerVision3D, TestRobotArrayNoRobot)
 {
-  auto robotArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getRobotArray({});
+  auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray({});
   EXPECT_EQ(robotArray.robots.size(), 0u);
 }
 
@@ -133,7 +133,7 @@ TEST(SimToSoccerVision3D, TestRobotArrayOneRobotWithHead)
   head.theta = 45;
   player.head.push_back(head);
 
-  auto robotArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getRobotArray({player});
+  auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray({player});
 
   EXPECT_EQ(robotArray.header.frame_id, "CameraTop_frame");
   EXPECT_EQ(robotArray.robots.size(), 1u);
@@ -163,7 +163,7 @@ TEST(SimToSoccerVision3D, TestRobotArrayRobotWithoutHeadShouldntBeCounted)
   player.rfoot.push_back(spherical);
   player.lfoot.push_back(spherical);
 
-  auto robotArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getRobotArray({player});
+  auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray({player});
 
   EXPECT_EQ(robotArray.header.frame_id, "CameraTop_frame");
   EXPECT_EQ(robotArray.robots.size(), 0u);
@@ -178,6 +178,6 @@ TEST(SimToSoccerVision3D, TestRobotArrayMultipleRobots)
   players.push_back(player);
   players.push_back(player);
 
-  auto robotArray = rcss3d_agent_soccer::sim_to_soccer_vision_3d::getRobotArray(players);
+  auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray(players);
   EXPECT_EQ(robotArray.robots.size(), 2u);
 }

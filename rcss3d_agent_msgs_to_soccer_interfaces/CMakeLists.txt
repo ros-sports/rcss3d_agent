@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(rcss3d_agent_soccer)
+project(rcss3d_agent_msgs_to_soccer_interfaces)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -16,7 +16,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
 
 # Build
 add_library(${PROJECT_NAME} SHARED
-  src/sim_to_soccer_vision_3d.cpp)
+  src/conversion.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)

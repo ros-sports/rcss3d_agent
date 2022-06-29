@@ -13,14 +13,12 @@
 // limitations under the License.
 
 #include <vector>
-#include "rcss3d_agent_soccer/sim_to_soccer_vision_3d.hpp"
+#include "rcss3d_agent_msgs_to_soccer_interfaces/conversion.hpp"
 #include "polar_to_point.hpp"
 #include "soccer_vision_3d_msgs/msg/ball.hpp"
 #include "deg2rad.hpp"
 
-namespace rcss3d_agent_soccer
-{
-namespace sim_to_soccer_vision_3d
+namespace rcss3d_agent_msgs_to_soccer_interfaces
 {
 
 soccer_vision_3d_msgs::msg::BallArray getBallArray(
@@ -30,7 +28,7 @@ soccer_vision_3d_msgs::msg::BallArray getBallArray(
   ballArray.header.frame_id = "CameraTop_frame";
   if (ball.has_value()) {
     auto ballV = ball.value();
-    auto converted = rcss3d_agent_soccer::polar_to_point(
+    auto converted = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
       ballV.center.r, deg2rad(ballV.center.phi), deg2rad(ballV.center.theta));
 
     soccer_vision_3d_msgs::msg::Ball ball;
@@ -46,7 +44,7 @@ soccer_vision_3d_msgs::msg::GoalpostArray getGoalpostArray(
   soccer_vision_3d_msgs::msg::GoalpostArray goalpostArray;
   goalpostArray.header.frame_id = "CameraTop_frame";
   for (auto & goalpost : goalposts) {
-    auto converted = rcss3d_agent_soccer::polar_to_point(
+    auto converted = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
       goalpost.top.r, deg2rad(goalpost.top.phi), deg2rad(goalpost.top.theta));
 
     soccer_vision_3d_msgs::msg::Goalpost goalpostConverted;
@@ -76,9 +74,9 @@ soccer_vision_3d_msgs::msg::MarkingArray getMarkingArray(
   markingArray.header.frame_id = "CameraTop_frame";
   for (auto & fieldLine : fieldLines) {
     soccer_vision_3d_msgs::msg::MarkingSegment markingSegment;
-    markingSegment.start = rcss3d_agent_soccer::polar_to_point(
+    markingSegment.start = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
       fieldLine.start.r, deg2rad(fieldLine.start.phi), deg2rad(fieldLine.start.theta));
-    markingSegment.end = rcss3d_agent_soccer::polar_to_point(
+    markingSegment.end = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
       fieldLine.end.r, deg2rad(fieldLine.end.phi), deg2rad(fieldLine.end.theta));
 
     markingArray.segments.push_back(markingSegment);
@@ -97,7 +95,7 @@ soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
     if (player.head.size() > 0) {
       soccer_vision_3d_msgs::msg::Robot robot;
 
-      robot.bb.center.position = rcss3d_agent_soccer::polar_to_point(
+      robot.bb.center.position = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
         player.head[0].r, deg2rad(player.head[0].phi), deg2rad(player.head[0].theta));
 
       // Diameter of the robot is 0.3m (estimate)
@@ -113,5 +111,4 @@ soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
   return robotArray;
 }
 
-}  // namespace sim_to_soccer_vision_3d
-}  // namespace rcss3d_agent_soccer
+}  // namespace rcss3d_agent_msgs_to_soccer_interfaces

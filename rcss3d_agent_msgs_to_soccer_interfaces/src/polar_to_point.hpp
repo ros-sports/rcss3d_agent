@@ -18,7 +18,7 @@
 #include <cmath>
 #include "geometry_msgs/msg/point.hpp"
 
-namespace rcss3d_agent_soccer
+namespace rcss3d_agent_msgs_to_soccer_interfaces
 {
 
 geometry_msgs::msg::Point polar_to_point(
@@ -35,6 +35,6 @@ geometry_msgs::msg::Point polar_to_point(
   return point;
 }
 
-}  // namespace rcss3d_agent_soccer
+}  // namespace rcss3d_agent_msgs_to_soccer_interfaces
 
 #endif  // POLAR_TO_POINT_HPP_
