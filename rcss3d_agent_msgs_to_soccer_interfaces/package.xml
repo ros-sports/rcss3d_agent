@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rcss3d_agent_msgs_to_soccer_interfaces</name>
+  <version>0.3.1</version>
+  <description>Library with methods that convert rcss3d_agent_msgs to soccer_interfaces</description>
+  <maintainer email="kenjibrameld@gmail.com">ijnek</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rcss3d_agent_msgs</depend>
+  <depend>soccer_vision_3d_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
