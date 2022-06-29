@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent_msgs_to_soccer_interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.0 (2022-06-30)
+------------------
 * Add rcss3d_agent_msgs_to_soccer_interfaces package
 * Contributors: Kenji Brameld
 

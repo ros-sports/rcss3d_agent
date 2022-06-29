@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="2">
   <name>rcss3d_agent</name>
-  <version>0.3.1</version>
+  <version>0.4.0</version>
   <description>Launches a RoboCup 3D Simulation Agent, and converts data to and from ROS2 msgs</description>
   <maintainer email="kenjibrameld@gmail.com">ijnek</maintainer>
   <license>Apache License 2.0</license>
