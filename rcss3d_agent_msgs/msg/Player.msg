@@ -1,7 +1,7 @@
 # An observed player is described through the name of it's team, the player number and one or more
 # position vectors to different body parts.
 
-string team  # The player number of the seen player
+string team  # The name of the team, to which the seen player belongs.
 int32 id  # The player number of the seen player
 Spherical[<=1] head  # Observation of head
 Spherical[<=1] rlowerarm  # Observation of right lower arm
