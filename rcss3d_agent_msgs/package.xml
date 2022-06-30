@@ -3,7 +3,7 @@
 <package format="3">
   <name>rcss3d_agent_msgs</name>
   <description>Custom messages for communicating with rcss3d_agent</description>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <maintainer email="kenjibrameld@gmail.com">ijnek</maintainer>
   <license>Apache License 2.0</license>
 
