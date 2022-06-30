@@ -2,6 +2,11 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* ensure all vision fields are being parsed correctly
+* Contributors: Kenji Brameld
+
 0.2.0 (2022-06-15)
 ------------------
 
