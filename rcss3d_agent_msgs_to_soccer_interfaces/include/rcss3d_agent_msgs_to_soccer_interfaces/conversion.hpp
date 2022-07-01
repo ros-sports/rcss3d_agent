@@ -16,6 +16,7 @@
 #define RCSS3D_AGENT_MSGS_TO_SOCCER_INTERFACES__CONVERSION_HPP_
 
 #include <optional>
+#include <string>
 #include <vector>
 #include "soccer_vision_3d_msgs/msg/ball_array.hpp"
 #include "soccer_vision_3d_msgs/msg/goalpost_array.hpp"
@@ -39,7 +40,7 @@ soccer_vision_3d_msgs::msg::MarkingArray getMarkingArray(
   const std::vector<rcss3d_agent_msgs::msg::FieldLine> & fieldLines);
 
 soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
-  const std::vector<rcss3d_agent_msgs::msg::Player> & players);
+  const std::vector<rcss3d_agent_msgs::msg::Player> & players, std::string nameTeamOwn = "");
 
 }  // namespace rcss3d_agent_msgs_to_soccer_interfaces
 

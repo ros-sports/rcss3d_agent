@@ -85,7 +85,7 @@ soccer_vision_3d_msgs::msg::MarkingArray getMarkingArray(
 }
 
 soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
-  const std::vector<rcss3d_agent_msgs::msg::Player> & players)
+  const std::vector<rcss3d_agent_msgs::msg::Player> & players, std::string nameTeamOwn)
 {
   soccer_vision_3d_msgs::msg::RobotArray robotArray;
   robotArray.header.frame_id = "CameraTop_frame";
@@ -104,6 +104,14 @@ soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
 
       // Height of the robot is 0.6m (estimate)
       robot.bb.size.z = 0.6;
+
+      if (nameTeamOwn == "") {
+        robot.attributes.team = soccer_vision_attribute_msgs::msg::Robot::TEAM_UNKNOWN;
+      } else if (nameTeamOwn == player.team) {
+        robot.attributes.team = soccer_vision_attribute_msgs::msg::Robot::TEAM_OWN;
+      } else {
+        robot.attributes.team = soccer_vision_attribute_msgs::msg::Robot::TEAM_OPPONENT;
+      }
 
       robotArray.robots.push_back(robot);
     }

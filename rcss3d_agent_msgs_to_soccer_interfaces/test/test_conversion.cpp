@@ -17,6 +17,7 @@
 #include "rcss3d_agent_msgs/msg/ball.hpp"
 #include "rcss3d_agent_msgs/msg/spherical.hpp"
 #include "rcss3d_agent_msgs_to_soccer_interfaces/conversion.hpp"
+#include "soccer_vision_attribute_msgs/msg/robot.hpp"
 #include "../src/polar_to_point.hpp"
 
 TEST(SimToSoccerVision3D, TestBallArrayNoBall)
@@ -180,4 +181,35 @@ TEST(SimToSoccerVision3D, TestRobotArrayMultipleRobots)
 
   auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray(players);
   EXPECT_EQ(robotArray.robots.size(), 2u);
+}
+
+TEST(SimToSoccerVision3D, TestRobotArrayNoNameTeamOwnProvided)
+{
+  rcss3d_agent_msgs::msg::Player player;
+  player.head.push_back(rcss3d_agent_msgs::msg::Spherical{});
+
+  auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray({player});
+
+  EXPECT_EQ(
+    robotArray.robots[0].attributes.team, soccer_vision_attribute_msgs::msg::Robot::TEAM_UNKNOWN);
+}
+
+
+TEST(SimToSoccerVision3D, TestRobotArrayNameTeamOwnProvided)
+{
+  rcss3d_agent_msgs::msg::Player player1;
+  player1.head.push_back(rcss3d_agent_msgs::msg::Spherical{});
+  player1.team = "Foo";
+
+  rcss3d_agent_msgs::msg::Player player2;
+  player2.head.push_back(rcss3d_agent_msgs::msg::Spherical{});
+  player2.team = "Bar";
+
+  auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray( \
+    {player1, player2}, "Foo");
+
+  EXPECT_EQ(
+    robotArray.robots[0].attributes.team, soccer_vision_attribute_msgs::msg::Robot::TEAM_OWN);
+  EXPECT_EQ(
+    robotArray.robots[1].attributes.team, soccer_vision_attribute_msgs::msg::Robot::TEAM_OPPONENT);
 }
