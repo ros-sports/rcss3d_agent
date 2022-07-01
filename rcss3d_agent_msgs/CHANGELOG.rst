@@ -2,6 +2,11 @@
 Changelog for package rcss3d_agent_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix up comment in Player.msg
+* Contributors: Kenji Brameld
+
 0.4.0 (2022-06-30)
 ------------------
 

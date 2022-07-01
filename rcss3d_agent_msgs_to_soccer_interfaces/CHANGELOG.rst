@@ -2,6 +2,11 @@
 Changelog for package rcss3d_agent_msgs_to_soccer_interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add player number and team conversion to getRobotArray
+* Contributors: Kenji Brameld
+
 0.4.0 (2022-06-30)
 ------------------
 * Add rcss3d_agent_msgs_to_soccer_interfaces package
