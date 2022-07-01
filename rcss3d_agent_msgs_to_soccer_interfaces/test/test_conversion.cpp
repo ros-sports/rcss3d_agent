@@ -133,6 +133,7 @@ TEST(SimToSoccerVision3D, TestRobotArrayOneRobotWithHead)
   head.phi = 45;
   head.theta = 45;
   player.head.push_back(head);
+  player.id = 5;
 
   auto robotArray = rcss3d_agent_msgs_to_soccer_interfaces::getRobotArray({player});
 
@@ -149,6 +150,8 @@ TEST(SimToSoccerVision3D, TestRobotArrayOneRobotWithHead)
 
   // Height of the robot is 0.6m (estimate)
   EXPECT_NEAR(robotArray.robots[0].bb.size.z, 0.6, 0.01);
+
+  EXPECT_EQ(robotArray.robots[0].attributes.player_number, 5);
 }
 
 TEST(SimToSoccerVision3D, TestRobotArrayRobotWithoutHeadShouldntBeCounted)

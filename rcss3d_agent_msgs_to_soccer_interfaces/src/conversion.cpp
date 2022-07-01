@@ -113,6 +113,8 @@ soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
         robot.attributes.team = soccer_vision_attribute_msgs::msg::Robot::TEAM_OPPONENT;
       }
 
+      robot.attributes.player_number = player.id;
+
       robotArray.robots.push_back(robot);
     }
   }
