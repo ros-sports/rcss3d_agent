@@ -2,8 +2,8 @@
 Changelog for package rcss3d_agent_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.2 (2024-04-14)
+------------------
 * Fix up comment in Player.msg (`#15 <https://github.com/ros-sports/rcss3d_agent/issues/15>`_)
 * Contributors: Kenji Brameld
 
