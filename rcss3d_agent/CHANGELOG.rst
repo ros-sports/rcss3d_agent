@@ -2,6 +2,9 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.1 (2022-06-30)
 ------------------
 * ensure all vision fields are being parsed correctly
