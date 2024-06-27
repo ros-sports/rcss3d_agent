@@ -18,6 +18,7 @@
 #include <optional>
 #include <vector>
 #include "rcss3d_agent_msgs/msg/ball.hpp"
+#include "rcss3d_agent_msgs/msg/field_feature.hpp"
 #include "rcss3d_agent_msgs/msg/field_line.hpp"
 #include "rcss3d_agent_msgs/msg/flag.hpp"
 #include "rcss3d_agent_msgs/msg/goalpost.hpp"
@@ -31,6 +32,7 @@ namespace sexp_vision
 {
 
 std::optional<rcss3d_agent_msgs::msg::Ball> getBall(sexpresso::Sexp & seeSexp);
+std::vector<rcss3d_agent_msgs::msg::FieldFeature> getFieldFeatures(sexpresso::Sexp & seeSexp);
 std::vector<rcss3d_agent_msgs::msg::FieldLine> getFieldLines(sexpresso::Sexp & seeSexp);
 std::vector<rcss3d_agent_msgs::msg::Flag> getFlags(sexpresso::Sexp & seeSexp);
 std::vector<rcss3d_agent_msgs::msg::Goalpost> getGoalposts(sexpresso::Sexp & seeSexp);

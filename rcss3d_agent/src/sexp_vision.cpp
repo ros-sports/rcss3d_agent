@@ -38,6 +38,51 @@ std::optional<rcss3d_agent_msgs::msg::Ball> getBall(sexpresso::Sexp & seeSexp)
   }
   return std::nullopt;
 }
+std::vector<rcss3d_agent_msgs::msg::FieldFeature> getFieldFeatures(sexpresso::Sexp & seeSexp)
+{
+  std::vector<rcss3d_agent_msgs::msg::FieldFeature> fieldFeatures;
+  for (auto const & arg : seeSexp.arguments()) {
+    auto const & s = arg.value.sexp;
+    if (s.at(0).value.str == "V") {
+      // Corners have form: (V (ffs <distance> <angle1> <angle2> <orientation_w> <orientation_x> <orientation_y> <orientation_z>))
+      rcss3d_agent_msgs::msg::FieldFeature fieldFeature;
+      fieldFeature.type = rcss3d_agent_msgs::msg::FieldFeature::TYPE_CORNER;
+      fieldFeature.center.r = std::stof(s.at(1).value.sexp.at(1).value.str);
+      fieldFeature.center.phi = std::stof(s.at(1).value.sexp.at(2).value.str);
+      fieldFeature.center.theta = std::stof(s.at(1).value.sexp.at(3).value.str);
+      fieldFeature.orientation_w = std::stof(s.at(1).value.sexp.at(4).value.str);
+      fieldFeature.orientation_x = std::stof(s.at(1).value.sexp.at(5).value.str);
+      fieldFeature.orientation_y = std::stof(s.at(1).value.sexp.at(6).value.str);
+      fieldFeature.orientation_z = std::stof(s.at(1).value.sexp.at(7).value.str);
+      fieldFeatures.push_back(fieldFeature);
+    } else if (s.at(0).value.str == "CC") {
+      // Centre circles have form: (CC (ffs <distance> <angle1> <angle2> <orientation_w> <orientation_x> <orientation_y> <orientation_z>))
+      rcss3d_agent_msgs::msg::FieldFeature fieldFeature;
+      fieldFeature.type = rcss3d_agent_msgs::msg::FieldFeature::TYPE_CENTRE_CIRCLE;
+      fieldFeature.center.r = std::stof(s.at(1).value.sexp.at(1).value.str);
+      fieldFeature.center.phi = std::stof(s.at(1).value.sexp.at(2).value.str);
+      fieldFeature.center.theta = std::stof(s.at(1).value.sexp.at(3).value.str);
+      fieldFeature.orientation_w = std::stof(s.at(1).value.sexp.at(4).value.str);
+      fieldFeature.orientation_x = std::stof(s.at(1).value.sexp.at(5).value.str);
+      fieldFeature.orientation_y = std::stof(s.at(1).value.sexp.at(6).value.str);
+      fieldFeature.orientation_z = std::stof(s.at(1).value.sexp.at(7).value.str);
+      fieldFeatures.push_back(fieldFeature);
+    } else if (s.at(0).value.str == "T") {
+      // T-Junctions have form: (T (ffs <distance> <angle1> <angle2> <orientation_w> <orientation_x> <orientation_y> <orientation_z>))
+      rcss3d_agent_msgs::msg::FieldFeature fieldFeature;
+      fieldFeature.type = rcss3d_agent_msgs::msg::FieldFeature::TYPE_T_JUNCTION;
+      fieldFeature.center.r = std::stof(s.at(1).value.sexp.at(1).value.str);
+      fieldFeature.center.phi = std::stof(s.at(1).value.sexp.at(2).value.str);
+      fieldFeature.center.theta = std::stof(s.at(1).value.sexp.at(3).value.str);
+      fieldFeature.orientation_w = std::stof(s.at(1).value.sexp.at(4).value.str);
+      fieldFeature.orientation_x = std::stof(s.at(1).value.sexp.at(5).value.str);
+      fieldFeature.orientation_y = std::stof(s.at(1).value.sexp.at(6).value.str);
+      fieldFeature.orientation_z = std::stof(s.at(1).value.sexp.at(7).value.str);
+      fieldFeatures.push_back(fieldFeature);
+    }
+  }
+  return fieldFeatures;
+}
 std::vector<rcss3d_agent_msgs::msg::FieldLine> getFieldLines(sexpresso::Sexp & seeSexp)
 {
   std::vector<rcss3d_agent_msgs::msg::FieldLine> fieldLines;

@@ -9,17 +9,20 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rcss3d_agent_msgs REQUIRED)
 find_package(soccer_vision_3d_msgs REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   rcss3d_agent_msgs
-  soccer_vision_3d_msgs)
+  soccer_vision_3d_msgs
+  Eigen3)
 
 # Build
 add_library(${PROJECT_NAME} SHARED
   src/conversion.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+  ${EIGEN3_INCLUDE_DIR})
 
 ament_target_dependencies(${PROJECT_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)

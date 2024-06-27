@@ -23,8 +23,9 @@
 #include "soccer_vision_3d_msgs/msg/marking_array.hpp"
 #include "soccer_vision_3d_msgs/msg/robot_array.hpp"
 #include "rcss3d_agent_msgs/msg/ball.hpp"
-#include "rcss3d_agent_msgs/msg/goalpost.hpp"
+#include "rcss3d_agent_msgs/msg/field_feature.hpp"
 #include "rcss3d_agent_msgs/msg/field_line.hpp"
+#include "rcss3d_agent_msgs/msg/goalpost.hpp"
 #include "rcss3d_agent_msgs/msg/player.hpp"
 
 namespace rcss3d_agent_msgs_to_soccer_interfaces
@@ -37,7 +38,8 @@ soccer_vision_3d_msgs::msg::GoalpostArray getGoalpostArray(
   const std::vector<rcss3d_agent_msgs::msg::Goalpost> & goalpost);
 
 soccer_vision_3d_msgs::msg::MarkingArray getMarkingArray(
-  const std::vector<rcss3d_agent_msgs::msg::FieldLine> & fieldLines);
+  const std::vector<rcss3d_agent_msgs::msg::FieldLine> & fieldLines,
+  const std::vector<rcss3d_agent_msgs::msg::FieldFeature> & fieldFeatures);
 
 soccer_vision_3d_msgs::msg::RobotArray getRobotArray(
   const std::vector<rcss3d_agent_msgs::msg::Player> & players, std::string nameTeamOwn = "");
