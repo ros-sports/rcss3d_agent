@@ -12,8 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <vector>
 #include "rcss3d_agent_msgs_to_soccer_interfaces/conversion.hpp"
+
+#include <cassert>
+#include <vector>
+#include <iostream>
+
+#include <Eigen/Dense>
+
 #include "polar_to_point.hpp"
 #include "soccer_vision_3d_msgs/msg/ball.hpp"
 #include "deg2rad.hpp"
@@ -68,7 +74,8 @@ soccer_vision_3d_msgs::msg::GoalpostArray getGoalpostArray(
 }
 
 soccer_vision_3d_msgs::msg::MarkingArray getMarkingArray(
-  const std::vector<rcss3d_agent_msgs::msg::FieldLine> & fieldLines)
+  const std::vector<rcss3d_agent_msgs::msg::FieldLine> & fieldLines,
+  const std::vector<rcss3d_agent_msgs::msg::FieldFeature> & fieldFeatures)
 {
   soccer_vision_3d_msgs::msg::MarkingArray markingArray;
   markingArray.header.frame_id = "CameraTop_frame";
@@ -80,6 +87,69 @@ soccer_vision_3d_msgs::msg::MarkingArray getMarkingArray(
       fieldLine.end.r, deg2rad(fieldLine.end.phi), deg2rad(fieldLine.end.theta));
 
     markingArray.segments.push_back(markingSegment);
+  }
+  for (auto & fieldFeature : fieldFeatures) {
+    switch (fieldFeature.type) {
+      case rcss3d_agent_msgs::msg::FieldFeature::TYPE_CENTRE_CIRCLE:
+      {
+        // Not supported yet
+        break;
+      }
+      case rcss3d_agent_msgs::msg::FieldFeature::TYPE_CORNER:
+      {
+        soccer_vision_3d_msgs::msg::MarkingIntersection markingIntersection;
+        // Not evaluating heading_rays for now
+        markingIntersection.center = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
+          fieldFeature.center.r, deg2rad(fieldFeature.center.phi), deg2rad(fieldFeature.center.theta));
+        markingIntersection.num_rays = 2;
+
+        // Create quaternion from Euler angles
+        Eigen::Quaternionf q {fieldFeature.orientation_w, fieldFeature.orientation_x,
+                              fieldFeature.orientation_y, fieldFeature.orientation_z };
+        // Convert quaternion to 3x3 rotation matrix
+        Eigen::Matrix3f m = q.toRotationMatrix();
+        Eigen::Vector3f ray1 = m * Eigen::Vector3f{0.2, 0.2, 0.0};
+        Eigen::Vector3f ray2 = m * Eigen::Vector3f{0.2, -0.2, 0.0};
+        geometry_msgs::msg::Vector3 ray1_msg, ray2_msg;
+        ray1_msg.set__x(ray1.x()).set__y(ray1.y()).set__z(ray1.z());
+        ray2_msg.set__x(ray2.x()).set__y(ray2.y()).set__z(ray2.z());
+        markingIntersection.rays.push_back(ray1_msg);
+        markingIntersection.rays.push_back(ray2_msg);
+        markingArray.intersections.push_back(markingIntersection);
+        break;
+      }
+      case rcss3d_agent_msgs::msg::FieldFeature::TYPE_T_JUNCTION:
+      {
+        soccer_vision_3d_msgs::msg::MarkingIntersection markingIntersection;
+        // Not evaluating heading_rays for now
+        markingIntersection.center = rcss3d_agent_msgs_to_soccer_interfaces::polar_to_point(
+          fieldFeature.center.r, deg2rad(fieldFeature.center.phi), deg2rad(fieldFeature.center.theta));
+        markingIntersection.num_rays = 3;
+
+        // Create quaternion from Euler angles
+        Eigen::Quaternionf q {fieldFeature.orientation_w, fieldFeature.orientation_x,
+                              fieldFeature.orientation_y, fieldFeature.orientation_z };
+        // Convert quaternion to 3x3 rotation matrix
+        Eigen::Matrix3f m = q.toRotationMatrix();
+        Eigen::Vector3f ray1 = m * Eigen::Vector3f{0.0, 0.2, 0.0};
+        Eigen::Vector3f ray2 = m * Eigen::Vector3f{0.0, -0.2, 0.0};
+        Eigen::Vector3f ray3 = m * Eigen::Vector3f{-0.2, 0.0, 0.0};
+        geometry_msgs::msg::Vector3 ray1_msg, ray2_msg, ray3_msg;
+        ray1_msg.set__x(ray1.x()).set__y(ray1.y()).set__z(ray1.z());
+        ray2_msg.set__x(ray2.x()).set__y(ray2.y()).set__z(ray2.z());
+        ray3_msg.set__x(ray3.x()).set__y(ray3.y()).set__z(ray3.z());
+        markingIntersection.rays.push_back(ray1_msg);
+        markingIntersection.rays.push_back(ray2_msg);
+        markingIntersection.rays.push_back(ray3_msg);
+        markingArray.intersections.push_back(markingIntersection);
+        break;
+      }
+      default:
+      {
+        assert(false);  // This should never happen (if it does, it's a bug in the agent
+        break;
+      }
+    }
   }
   return markingArray;
 }

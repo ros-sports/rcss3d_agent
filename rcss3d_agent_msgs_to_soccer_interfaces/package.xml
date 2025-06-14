@@ -9,6 +9,7 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <depend>eigen</depend>
   <depend>rcss3d_agent_msgs</depend>
   <depend>soccer_vision_3d_msgs</depend>
 

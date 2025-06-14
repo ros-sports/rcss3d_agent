@@ -40,7 +40,11 @@ static const char * sexp =
   "(rlowerarm (pol 0.18 -33.55 -20.16)) "
   "(llowerarm (pol 0.18 34.29 -19.80))) "
   "(L (pol 12.11 -40.77 -2.40) (pol 12.95 -37.76 -2.41)) "
-  "(L (pol 12.97 -37.56 -2.24) (pol 13.32 -32.98 -2.20))";
+  "(L (pol 12.97 -37.56 -2.24) (pol 13.32 -32.98 -2.20)) "
+  "(V (ffs 17.47 13.02 -7.83 50.63)) "
+  "(CC (ffs 16.06 -5.69 -7.81 3.60)) "
+  "(T (ffs 12.15 -0.36 -4.95 183.04))";
+
 static sexpresso::Sexp seeSexp = sexpresso::parse(sexp);
 
 TEST(TestBall, TestNoBall)
@@ -58,6 +62,41 @@ TEST(TestBall, TestHasBall)
   EXPECT_NEAR(ball.center.r, 8.51, 0.01);
   EXPECT_NEAR(ball.center.phi, -0.21, 0.01);
   EXPECT_NEAR(ball.center.theta, -0.17, 0.01);
+}
+
+TEST(TestFieldFeatures, TestNoFieldFeatures)
+{
+  ASSERT_EQ(rcss3d_agent::sexp_vision::getFieldFeatures(seeSexpEmpty).size(), 0u);
+}
+
+TEST(TestFieldFeatures, TestFieldFeatures)
+{
+  auto fieldFeatures = rcss3d_agent::sexp_vision::getFieldFeatures(seeSexp);
+  ASSERT_EQ(fieldFeatures.size(), 3u);
+
+  // (V (ffs 17.47 13.02 -7.83 50.63))
+  rcss3d_agent_msgs::msg::FieldFeature & ff1 = fieldFeatures.at(0);
+  EXPECT_EQ(ff1.type, rcss3d_agent_msgs::msg::FieldFeature::TYPE_CORNER);
+  EXPECT_NEAR(ff1.center.r, 17.47, 0.01);
+  EXPECT_NEAR(ff1.center.phi, 13.02, 0.01);
+  EXPECT_NEAR(ff1.center.theta, -7.83, 0.01);
+  // EXPECT_NEAR(ff1.orientation, 50.63, 0.01);
+
+  // (CC (ffs 16.06 -5.69 -7.81 3.60)))
+  rcss3d_agent_msgs::msg::FieldFeature & ff2 = fieldFeatures.at(1);
+  EXPECT_EQ(ff2.type, rcss3d_agent_msgs::msg::FieldFeature::TYPE_CENTRE_CIRCLE);
+  EXPECT_NEAR(ff2.center.r, 16.06, 0.01);
+  EXPECT_NEAR(ff2.center.phi, -5.69, 0.01);
+  EXPECT_NEAR(ff2.center.theta, -7.81, 0.01);
+  // EXPECT_NEAR(ff2.orientation, 3.60, 0.01);
+
+  // (T (ffs 12.15 -0.36 -4.95 183.04))
+  rcss3d_agent_msgs::msg::FieldFeature & ff3 = fieldFeatures.at(2);
+  EXPECT_EQ(ff3.type, rcss3d_agent_msgs::msg::FieldFeature::TYPE_T_JUNCTION);
+  EXPECT_NEAR(ff3.center.r, 12.15, 0.01);
+  EXPECT_NEAR(ff3.center.phi, -0.36, 0.01);
+  EXPECT_NEAR(ff3.center.theta, -4.95, 0.01);
+  // EXPECT_NEAR(ff3.orientation, 183.04, 0.01);
 }
 
 TEST(TestFieldLines, TestNoFieldLines)

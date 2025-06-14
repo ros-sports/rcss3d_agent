@@ -154,6 +154,9 @@ std::optional<rcss3d_agent_msgs::msg::Vision> SexpParser::getVision()
     if (auto ball = sexp_vision::getBall(*seeSexp); ball.has_value()) {
       vision.ball.push_back(ball.value());
     }
+    for (auto fieldFeature : sexp_vision::getFieldFeatures(*seeSexp)) {
+      vision.field_features.push_back(fieldFeature);
+    }
     for (auto fieldLine : sexp_vision::getFieldLines(*seeSexp)) {
       vision.field_lines.push_back(fieldLine);
     }

@@ -222,11 +222,13 @@ TEST(TestVisions, TestHasVision)
 {
   rcss3d_agent::SexpParser parser(
     "(See "
-    "(G2R (pol 17.55 -3.33 4.31)) "
-    "(F1R (pol 18.52 18.94 1.54)) "
-    "(B (pol 8.51 -0.21 -0.17)) "
-    "(P (team teamRed) (id 1) (head (pol 16.98 -0.21 3.19))) "
-    "(L (pol 12.11 -40.77 -2.40) (pol 12.95 -37.76 -2.41)))");
+    "(G2R (pol 17.55 -3.33 4.31)) "  // Goal post
+    "(F1R (pol 18.52 18.94 1.54)) "  // Flag
+    "(B (pol 8.51 -0.21 -0.17)) "  // Ball
+    "(P (team teamRed) (id 1) (head (pol 16.98 -0.21 3.19))) "  // Player
+    "(L (pol 12.11 -40.77 -2.40) (pol 12.95 -37.76 -2.41)) "  // Line
+    "(V (ffs 17.47 13.02 -7.83 50.63)))"  // Field Feature (Corner)
+  );
   auto visionOptional = parser.getVision();
   ASSERT_TRUE(visionOptional.has_value());
 
@@ -236,6 +238,7 @@ TEST(TestVisions, TestHasVision)
   EXPECT_EQ(vision.ball.size(), 1u);
   EXPECT_EQ(vision.players.size(), 1u);
   EXPECT_EQ(vision.field_lines.size(), 1u);
+  EXPECT_EQ(vision.field_features.size(), 1u);
 }
 
 TEST(TestGameState, TestGameState)

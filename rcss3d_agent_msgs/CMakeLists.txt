@@ -27,6 +27,7 @@ set(msg_files
   "msg/Beam.msg"
   "msg/Effector.msg"
   "msg/FieldLine.msg"
+  "msg/FieldFeature.msg"
   "msg/Flag.msg"
   "msg/ForceResistance.msg"
   "msg/GameState.msg"
